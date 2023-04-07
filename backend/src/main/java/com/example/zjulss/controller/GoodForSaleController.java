@@ -6,13 +6,16 @@ import com.example.zjulss.entity.UserInfo;
 import com.example.zjulss.response.BaseResponse;
 import com.example.zjulss.service.GoodForSaleService;
 import com.example.zjulss.utils.HostHolder;
+import com.example.zjulss.utils.MyStringUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/good")
@@ -46,7 +49,7 @@ public class GoodForSaleController {
             return BaseResponse.fail(HttpServletResponse.SC_NOT_FOUND, "不存在此商品");
         }
         if (userInfo.getId() != goodForSale.getUid()) {
-            return BaseResponse.fail(HttpServletResponse.SC_UNAUTHORIZED, "清先登录");
+            return BaseResponse.fail(HttpServletResponse.SC_UNAUTHORIZED, "您不是商品的发布者");
         }
         if (goodForSaleService.removeGood(id)) {
             return BaseResponse.fail("删除成功");
@@ -60,5 +63,39 @@ public class GoodForSaleController {
         return goodForSaleService.getGoodInfo(id);
     }
 
+    @PostMapping("/updateName")
+    @ResponseBody
+    public boolean updateName(@RequestBody Map<String, String> map, HttpServletResponse httpServletResponse) throws IOException {
+        String id = map.get("id");
+        String newName = map.get("newName");
+        if (!MyStringUtils.checkIsValid(id, newName)) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
+            return false;
+        }
+        return goodForSaleService.updateGoodName(Integer.parseInt(id), newName);
+    }
 
+    @PostMapping("/updatePrice")
+    @ResponseBody
+    public boolean updatePrice(@RequestBody Map<String, String> map, HttpServletResponse httpServletResponse) throws IOException {
+        String id = map.get("id");
+        String price = map.get("newPrice");
+        if (!MyStringUtils.checkIsValid(id, price)) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
+            return false;
+        }
+        return goodForSaleService.updateGoodPrice(Integer.parseInt(id), Double.parseDouble(price));
+    }
+
+    @PostMapping("/updateCount")
+    @ResponseBody
+    public boolean updateCount(@RequestBody Map<String, String> map, HttpServletResponse httpServletResponse) throws IOException {
+        String id = map.get("id");
+        String count = map.get("newCount");
+        if (!MyStringUtils.checkIsValid(id, count)) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
+            return false;
+        }
+        return goodForSaleService.updateGoodCount(Integer.parseInt(id), Integer.parseInt(count));
+    }
 }

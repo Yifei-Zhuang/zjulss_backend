@@ -20,8 +20,8 @@ public class CartService {
         return cartMapper.getGoodsInCartOfUser(uid);
     }
 
-    public boolean removeRecord(int uid, int qid) {
-        return cartMapper.remove(uid, qid) != 0;
+    public boolean removeRecord(int id) {
+        return cartMapper.remove(id) != 0;
     }
 
     public boolean addRecord(Cart cart) {
@@ -30,5 +30,9 @@ public class CartService {
 
     public boolean setQuantity(Cart cart) {
         return cartMapper.setQuantity(cart.getId(), cart.getQuantity(), LocalDateTime.now()) != null;
+    }
+
+    public Cart getCart(int id) {
+        return cartMapper.getCart(id);
     }
 }

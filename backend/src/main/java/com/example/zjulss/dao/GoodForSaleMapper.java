@@ -15,12 +15,30 @@ public interface GoodForSaleMapper {
 
     //update
     @Select({
-            "select * from good where id = #{id}"
+            "select * from good where id = #{id} and display = 1"
     })
     GoodForSale getGood(int id);
 
-    @Delete({
-            "delete from good where id = #{id}"
+    @Update({
+            "update good set display = 0 where id = #{id} and display = 1"
     })
     int deleteGood(int id);
+
+    //update
+    @Update({
+            "update good set name = #{name} where id = #{id} and display = 1"
+    })
+    int updateName(String name, int id);
+
+    //update
+    @Update({
+            "update good set price = #{price} where id = #{id} and display = 1"
+    })
+    int updatePrice(Double price, int id);
+
+    //update
+    @Update({
+            "update good set count = #{count} where id = #{id} and display = 1"
+    })
+    int updateCount(int count, int id);
 }

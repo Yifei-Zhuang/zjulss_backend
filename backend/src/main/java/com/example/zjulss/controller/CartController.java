@@ -40,16 +40,18 @@ public class CartController {
     }
 
     @ResponseBody
-    @GetMapping("/delete/{uid}/{qid}")
+    @GetMapping("/delete/{id}")
     @LoginRequired
-    public boolean removeRecord(@PathVariable("uid") int uid, @PathVariable("qid") int qid, HttpServletResponse httpServletResponse) throws IOException {
+    public boolean removeRecord(@PathVariable("id") int id,
+                                HttpServletResponse httpServletResponse) throws IOException {
         UserInfo userInfo = hostHolder.getUser();
-        if (userInfo.getId() != uid) {
+        Cart cart = cartService.getCart(id);
+        if (userInfo.getId() != cart.getUid()) {
             httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value(), "you're now allowed to remove cart which is" +
                     " not belong to you");
             return false;
         }
-        return cartService.removeRecord(uid, qid);
+        return cartService.removeRecord(id);
     }
 
     @ResponseBody

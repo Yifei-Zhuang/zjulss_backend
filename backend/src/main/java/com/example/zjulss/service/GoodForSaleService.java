@@ -22,4 +22,15 @@ public class GoodForSaleService {
         return goodForSaleMapper.deleteGood(id) > 0;
     }
 
+    public boolean updateGoodName(int id, String newName) {
+        return goodForSaleMapper.updateName(newName, id) == 1;
+    }
+
+    public boolean updateGoodPrice(int id, Double price) {
+        return goodForSaleMapper.updatePrice(price, id) == 1;
+    }
+
+    public boolean updateGoodCount(int id, int count) {
+        return goodForSaleMapper.updateCount(count, id) == 1;
+    }
 }
