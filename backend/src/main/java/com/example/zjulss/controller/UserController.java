@@ -140,14 +140,129 @@ public class UserController {
         return BaseResponse.success(token);
     }
 
-    @GetMapping("/userinfo/{id}")
+    @GetMapping("/userinfo/")
     @ResponseBody
     @LoginRequired
     public BaseResponse getUserInfo() throws IOException {
         if (hostHolder.getUser() == null) {
             return BaseResponse.fail("请先登录");
         }
-        return BaseResponse.success(JSON.toJSONString(hostHolder.getUser()));
+        return BaseResponse.success(hostHolder.getUser().toString());
+    }
+
+    @PostMapping("/updaterealname")
+    @ResponseBody
+    @LoginRequired
+    public BaseResponse updateRealName(@RequestBody Map<String, String> inputMap,
+                                    HttpServletResponse httpServletResponse) throws IOException {
+        if (hostHolder.getUser() == null) {
+            return BaseResponse.fail("请先登录");
+        }
+        if(!inputMap.containsKey("realName")){
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        }
+        UserInfo userInfo = hostHolder.getUser();
+        userInfo.setRealName(inputMap.get("realName"));
+        if(!userInfoService.updateRealName(userInfo)){
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        }
+        return BaseResponse.success("success");
+    }
+
+    @PostMapping("/updateclazz")
+    @ResponseBody
+    @LoginRequired
+    public BaseResponse updateClazz(@RequestBody Map<String, String> inputMap,
+                                    HttpServletResponse httpServletResponse) throws IOException {
+        if (hostHolder.getUser() == null) {
+            return BaseResponse.fail("请先登录");
+        }
+        if(!inputMap.containsKey("clazz")){
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        }
+        UserInfo userInfo = hostHolder.getUser();
+        userInfo.setClazz(inputMap.get("clazz"));
+        if(!userInfoService.updateClazz(userInfo)){
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        }
+        return BaseResponse.success("success");
+    }
+
+    @PostMapping("/updatesno")
+    @ResponseBody
+    @LoginRequired
+    public BaseResponse updateSno(@RequestBody Map<String, String> inputMap,
+                                    HttpServletResponse httpServletResponse) throws IOException {
+        if (hostHolder.getUser() == null) {
+            return BaseResponse.fail("请先登录");
+        }
+        if(!inputMap.containsKey("sno")){
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        }
+        UserInfo userInfo = hostHolder.getUser();
+        userInfo.setSno(inputMap.get("sno"));
+        if(!userInfoService.updateSno(userInfo)){
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        }
+        return BaseResponse.success("success");
+    }
+
+    @PostMapping("/updatedormitory")
+    @ResponseBody
+    @LoginRequired
+    public BaseResponse updateDormitory(@RequestBody Map<String, String> inputMap,
+                                  HttpServletResponse httpServletResponse) throws IOException {
+        if (hostHolder.getUser() == null) {
+            return BaseResponse.fail("请先登录");
+        }
+        if(!inputMap.containsKey("dormitory")){
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        }
+        UserInfo userInfo = hostHolder.getUser();
+        userInfo.setDormitory(inputMap.get("dormitory"));
+        if(!userInfoService.updateDormitory(userInfo)){
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        }
+        return BaseResponse.success("success");
+    }
+
+    @PostMapping("/updategender")
+    @ResponseBody
+    @LoginRequired
+    public BaseResponse updateGender(@RequestBody Map<String, String> inputMap,
+                                        HttpServletResponse httpServletResponse) throws IOException {
+        if (hostHolder.getUser() == null) {
+            return BaseResponse.fail("请先登录");
+        }
+        if(!inputMap.containsKey("gender")){
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        }
+        UserInfo userInfo = hostHolder.getUser();
+        userInfo.setGender(inputMap.get("gender"));
+        if(!userInfoService.updateGender(userInfo)){
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        }
+        return BaseResponse.success("success");
+    }
+
+
+    @PostMapping("/updateavatar")
+    @ResponseBody
+    @LoginRequired
+    public BaseResponse updateAvatar(@RequestBody Map<String, String> inputMap,
+                                     HttpServletResponse httpServletResponse) throws IOException {
+        if (hostHolder.getUser() == null) {
+            return BaseResponse.fail("请先登录");
+        }
+        if(!inputMap.containsKey("avatar")){
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        }
+        UserInfo userInfo = hostHolder.getUser();
+        userInfo.setAvatar(inputMap.get("avatar"));
+        if(!userInfoService.updateAvatar(userInfo)){
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        }
+        return BaseResponse.success("success");
     }
 
 
