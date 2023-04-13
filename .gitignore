@@ -35,3 +35,9 @@ build/
 ### code ###
 **/application.yml
 **/.DS_Store
+
+### VS ###
+.vs/
+
+### NODE ###
+node_modules/
