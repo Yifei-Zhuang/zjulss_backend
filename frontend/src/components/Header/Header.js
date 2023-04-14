@@ -1,24 +1,58 @@
-import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
-import agent from '../../agent.js'
-import logo from '../../logo.svg'
-import {AppBar, Badge, IconButton, Toolbar, Typography} from "@material-ui/core";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import  "../../agent";
+import agent from "../../agent";
+import {Popover} from "@material-ui/core";
+function Header() {
+    const [rightMenu, setrightMenu] = useState(null);
 
-export default function Header() {
+    const handleMenuClick = (event) => {
+        setrightMenu(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setrightMenu(null);
+    };
+
     return (
-        <AppBar position="static" style={{backgroundColor: '#eee', borderBottom: '1px solid #ccc', boxShadow: 'none'}}>
-            <Toolbar  style={{color: '#555'}}>
+        <AppBar position="static" style={{ backgroundColor: '#eee', borderBottom: '1px solid #ccc', boxShadow: 'none' }}>
+            <Toolbar style={{ color: '#555' }}>
                 <Link to="/" className="nav-link">
-                <img src="https://static.itch.io/images/itchio-textless-black.svg" alt="logo"
-                     style={{width: 'auto', height: '30px', marginRight: '10px'}}/>
+                    <img src="https://static.itch.io/images/itchio-textless-black.svg" alt="logo" style={{ width: 'auto', height: '30px', marginRight: '10px' }} />
                 </Link>
-                <Typography variant="h6" >Second-hand trading platform</Typography>
-                <div style={{flexGrow: 1}}></div>
-                    <Link to="/Profile" className="nav-link">
-                        <img src="https://ts1.cn.mm.bing.net/th/id/R-C.0de849455e8b26a86ed20c7ede549de0?rik=6qgpqRjH9ZfUFA&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_266351.png&ehk=MGAevLueHXm4kBUecqJpFIory4vHyHTATf4kHUQsOFM%3d&risl=&pid=ImgRaw&r=0" alt="personalInfo"  style={{width: 'auto', height: '30px', marginRight: '10px'}}/>
-                    </Link>
+
+                <Typography variant="h6">Second-hand trading platform</Typography>
+                <div style={{ flexGrow: 1 }} />
+                <div>
+                    <IconButton onClick={handleMenuClick} edge="end">
+                        <img src="https://picx.zhimg.com/v2-abed1a8c04700ba7d72b45195223e0ff_l.jpg?source=172ae18b" alt="personalInfo" style={{ width: 'auto', height: '30px', marginRight: '10px' }} />
+                    </IconButton>
+                    <Popover
+                        anchorEl={rightMenu}
+                        open={Boolean(rightMenu)}
+                        onClose={handleMenuClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+
+                    >
+                        <MenuItem component={Link} to='/Profile' >个人信息</MenuItem>
+                        <MenuItem component={Link} to='/PersonItem' >个人交易</MenuItem>
+                        <MenuItem component={Link} to='/Login' >登录</MenuItem>
+                        <MenuItem component={Link} to='/Register' >注册</MenuItem>
+
+                    </Popover>
+                </div>
             </Toolbar>
         </AppBar>
-    )
-
+    );
 }
+
+export default Header;

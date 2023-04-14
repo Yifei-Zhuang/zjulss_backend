@@ -1,197 +1,153 @@
-import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
-import agent from '../../agent.js'
-import logo from '../../logo.svg'
-import Header from "../Header/Header";
-import {
-    AppBar,
-    Badge,
-    Box,
-    Button,
-    Card,
-    Container,
-    Grid,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Tab,
-    Tabs,
-    Toolbar,
-    Typography,
-
-} from '@material-ui/core';
-import {Col} from "react-bootstrap";
+import {Typography, Avatar, Grid, makeStyles, Box, Card, CardContent, Button, TextField} from '@material-ui/core';
+import React, {useEffect, useState} from 'react'
+import agent from "../../agent";
 
 
-const BuyingItems = ({items}) => {
-    return (
-        <Box mt={3}>
-            <Typography variant="h4">个人求购的商品</Typography>
-            <hr/>
-            {items.length > 0 ? (
-                <Grid container spacing={3}>
-                    {items.map(item => (
-                        <Grid item xs={12} key={item.id}>
-                            <Card>
-                                <Box p={2}>
-                                    <Typography variant="h5">{item.name}</Typography>
-                                    <Typography variant="subtitle1">价格：{item.price}</Typography>
-                                    <Button variant="contained" color="primary" onClick={() => {
-                                    }}>购买</Button>
-                                </Box>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            ) : ("空空如也。")
-            }
-        </Box>
-    );
-};
+function getUserData(s){
+    // 提取字符串中的属性和值
+    const id = s.substring(s.indexOf("id=") + 3, s.indexOf(", modify="));
+    const modify = s.substring(s.indexOf("modify=") + 7, s.indexOf(", userName="));
+    const userName = s.substring(s.indexOf("userName=") + 9, s.indexOf(", phone="));
+    const phone = s.substring(s.indexOf("phone=") + 6, s.indexOf(", realName="));
+    const realName = s.substring(s.indexOf("realName=") + 9, s.indexOf(", clazz="));
+    const clazz = s.substring(s.indexOf("clazz=") + 6, s.indexOf(", sno="));
+    const sno = s.substring(s.indexOf("sno=") + 4, s.indexOf(", dormitory="));
+    const dormitory = s.substring(s.indexOf("dormitory=") + 10, s.indexOf(", gender="));
+    const gender = s.substring(s.indexOf("gender=") + 7, s.indexOf(", createTime="));
+    const createTime = s.substring(s.indexOf("createTime=") + 11, s.indexOf(", avatar="));
+    const avatar = s.substring(s.indexOf("avatar=") + 7, s.length - 1);
+    return {
+        id: id,
+        modify: modify,
+        userName: userName,
+        phone: phone,
+        realName: realName,
+        clazz: clazz,
+        sno: sno,
+        dormitory: dormitory,
+        gender: gender,
+        createTime: createTime,
+        avatar: avatar
+    }
+}
+const useStyles = makeStyles((theme) => ({
+    root: {
+        backgroundColor: '#F5F5F5',
+        padding: theme.spacing(2)
+    },
+    title: {
+        fontWeight: 'bold',
+        marginBottom: theme.spacing(2)
+    },
+    avatar: {
+        width: theme.spacing(20),
+        height: theme.spacing(20),
+        margin: 'auto'
+    },
+    info: {
+        border: '1px solid #ccc',
+        padding: theme.spacing(2),
+        borderRadius: theme.spacing(1)
+    }
+}));
 
-const SellingItems = ({items}) => {
-    return (
-        <Box mt={3}>
-            <Typography variant="h4">个人出售的商品</Typography>
-            <hr/>
-            {items.length > 0 ? (
-                <Grid container spacing={3}>
-                    {items.map(item => (
-                        <Grid item xs={12} key={item.id}>
-                            <Card>
-                                <Box p={2}>
-                                    <Typography variant="h5">{item.name}</Typography>
-                                    <Typography variant="subtitle1">价格：{item.price}</Typography>
-                                    <Button variant="contained" color="primary" onClick={() => {
-                                    }}>购买</Button>
-                                </Box>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            ) : ("空空如也。")
-            }
-        </Box>
-    );
-};
+function Profile() {
+    const classes = useStyles();
+    const [userInfo, setUserInfo] = useState({});
+    const [editing, setEditing]=useState(false);
+    const fetchData = async () => {
+        const [info] = await Promise.all([
 
-const CartItems = ({items}) => {
-    return (
-        <Box mt={3}>
-            <Typography variant="h4">购物车</Typography>
-            <hr/>
-            {items.length > 0 ? (
-                <Grid container spacing={3}>
-                    {items.map(item => (
-                        <Grid item xs={12} key={item.id}>
-                            <Card>
-                                <Box p={2}>
-                                    <Typography variant="h5">{item.name}</Typography>
-                                    <Typography variant="subtitle1">价格：{item.price}</Typography>
-                                    <Button variant="contained" color="primary" onClick={() => {
-                                    }}>购买</Button>
-                                </Box>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            ) : ("空空如也。")
-            }
-        </Box>
-    );
-};
+            agent.Profile.getUserInfo()
 
-const Profile = () => {
-    const [buyingItems, setBuyingItems] = useState([]);
-    const [sellingItems, setSellingItems] = useState([]);
-    const [cartItems, setCartItems] = useState([]);
-
-    const [value, setValue] = useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+        ]);
+        console.log(info.msg)
+        setUserInfo(getUserData(info.msg))
+        console.log(userInfo)
     };
 
-    //这玩意等api好了就可以了
     useEffect(() => {
-        const fetchData = async () => {
-            const [buyingItems, sellingItems, cartItems] = await Promise.all([
-                agent.Profile.getBuy(),
-                agent.Profile.getSell(),
-                agent.Profile.getCart()
-            ]);
-            setBuyingItems(buyingItems);
-            setSellingItems(sellingItems);
-            setCartItems(cartItems);
-        };
         fetchData();
     }, []);
 
-    return (
-        <div>
-            <Container style={{marginTop: "20px"}}>
-                <Box marginTop={34}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} md={2}>
-                            <Box component="img" src={logo} alt="logo" mb={2}/>
-                            <List component="nav">
-                                <ListItem
-                                    button
-                                    selected={value === 0}
-                                    onClick={() => handleChange(null, 0)}
-                                >
-                                    <ListItemIcon></ListItemIcon>
-                                    <ListItemText primary="个人求购的商品"/>
-                                    <Badge color="primary" badgeContent={buyingItems.length}/>
-                                </ListItem>
-                                <ListItem
-                                    button
-                                    selected={value === 1}
-                                    onClick={() => handleChange(null, 1)}
-                                >
-                                    <ListItemIcon></ListItemIcon>
-                                    <ListItemText primary="个人出售的商品"/>
-                                    <Badge color="primary" badgeContent={sellingItems.length}/>
-                                </ListItem>
-                                <ListItem
-                                    button
-                                    selected={value === 2}
-                                    onClick={() => handleChange(null, 2)}
-                                >
-                                    <ListItemIcon></ListItemIcon>
-                                    <ListItemText primary="购物车"/>
-                                    <Badge color="primary" badgeContent={cartItems.length}/>
-                                </ListItem>
-                            </List>
-                        </Grid>
-                        <Grid item xs={12} md={7}>
-                            <TabPanel value={value} index={0}>
-                                <BuyingItems items={buyingItems}/>
-                            </TabPanel>
-                            <TabPanel value={value} index={1}>
-                                <SellingItems items={sellingItems}/>
-                            </TabPanel>
-                            <TabPanel value={value} index={2}>
-                                <CartItems items={cartItems}/>
-                            </TabPanel>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Container>
-        </div>
-    );
-};
-const TabPanel = ({children, value, index}) => {
-    return (
-        <div hidden={value !== index}>
-            {value === index && (
-                <Box>
-                    {children}
-                </Box>
-            )}
-        </div>
-    );
-};
+    function handleUserInfoChange(clazz) {
+        
+    }
 
-export default Profile;
+    function handleSave() {
+        fetchData();
+    }
+
+    return (
+        <Box className={classes.root}>
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <Typography variant="h4" className={classes.title}>
+                        {userInfo.realName}
+                    </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                    <Avatar alt={userInfo.realName} src={userInfo.avatar} className={classes.avatar}/>
+                </Grid>
+                <Grid item xs={9}>
+                    <Box className={classes.info}>
+                        <Card>
+                            <CardContent>
+                                <Typography variant="h6">个人信息</Typography>
+                                {editing ?
+                                    <>
+                                        <TextField label="班级" value={userInfo.clazz} onChange={handleUserInfoChange("clazz")} />
+                                        <TextField label="学号" value={userInfo.sno} onChange={handleUserInfoChange("sno")} />
+                                        <TextField label="性别" value={userInfo.gender} onChange={handleUserInfoChange("gender")} />
+                                        <TextField label="ID" value={userInfo.id} onChange={handleUserInfoChange("id")} />
+                                    </>
+                                    :
+                                    <>
+                                        <Typography variant="subtitle1">班级：{userInfo.clazz}</Typography>
+                                        <Typography variant="subtitle1">学号：{userInfo.sno}</Typography>
+                                        <Typography variant="subtitle1">性别：{userInfo.gender}</Typography>
+                                        <Typography variant="subtitle1">ID：{userInfo.id}</Typography>
+                                    </>
+                                }
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardContent>
+                                <Typography variant="h6">联系方式</Typography>
+                                {editing ?
+                                    <>
+                                        <TextField label="用户名" value={userInfo.userName} onChange={handleUserInfoChange("userName")} />
+                                        <TextField label="电话" value={userInfo.phone} onChange={handleUserInfoChange("phone")} />
+                                        <TextField label="宿舍" value={userInfo.dormitory} onChange={handleUserInfoChange("dormitory")} />
+                                    </>
+                                    :
+                                    <>
+                                        <Typography variant="body1">用户名：{userInfo.userName}</Typography>
+                                        <Typography variant="body1">电话：{userInfo.phone}</Typography>
+                                        <Typography variant="body1">宿舍：{userInfo.dormitory}</Typography>
+                                    </>
+                                }
+                            </CardContent>
+                        </Card>
+                        <Typography variant="caption">加入时间：{userInfo.createTime}</Typography>
+                        <Typography variant="caption">修改时间：{userInfo.modify}</Typography>
+                        <Box mt={2}>
+                            <Card>
+                                <CardContent>
+                                    {editing ?
+                                        <Button variant="contained" color="primary" onClick={handleSave}>保存</Button>
+                                        :
+                                        <Button variant="contained" onClick={() => setEditing(true)}>编辑个人数据</Button>
+                                    }
+                                </CardContent>
+                            </Card>
+                        </Box>
+                    </Box>
+                </Grid>
+            </Grid>
+        </Box>
+    );
+}
+
+export default Profile
+

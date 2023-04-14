@@ -8,11 +8,11 @@ const API_ROOT = 'http://10.214.241.122:8080';
 const encode = encodeURIComponent;
 const responseBody = res => res.body;
 
-let token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkNGIxNDZmMS1kMTk2LTQ5NjQtYjExNi03NTUxOWZiNWU3NmEiLCJzdWIiOiI4IiwiaXNzIjoiemp1bHNzMiIsImlhdCI6MTY4MDg0MTI3MSwiZXhwIjoxNjgwODQ0ODcxfQ.EwhD6KSF1FQQbyu-7AZmmewtoQgaYZxBgTX96Cmlz0Q";
+let token ="Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkNTBlYmMyOC0zNTJlLTQ2NjgtOTQ3MS1hZTlhYmNjYzhjOTYiLCJzdWIiOiI4IiwiaXNzIjoiemp1bHNzMiIsImlhdCI6MTY4MTQ1ODkxNSwiZXhwIjoxNjgxNDYyNTE1fQ.9yIXyXbXyF9HV0ljkUXInxUaht0fYW0M6nr3E8ccPNE"
 
 const tokenPlugin = req => {
     if (token) {
-        req.set('authorization', `Token ${token}`);
+        req.set('Authorization', `${token}`);
     }
 }
 
@@ -28,8 +28,6 @@ const requests = {
 };
 
 const Auth = {
-    getInfo: () =>
-        requests.get('/user/userinfo/8'),
     login: ( password,phoneNumber) =>
         requests.post('/user/login', { password:password,phoneNumber:phoneNumber}),
     register: (code, password, userName, phoneNumber) =>
@@ -41,10 +39,12 @@ const Auth = {
 };
 
 const Profile ={
+    getUserInfo:()=>
+        requests.get('/user/userinfo/'),
     getBuy :() =>
         requests.get('/goodwanted/get'),
     getSell :() =>
-        requests.get('/goodsell/get'),
+        requests.get('/good/list'),
     getCart:() =>
         requests.get('/cart/detail')
 
@@ -56,5 +56,6 @@ const Profile ={
 export default {
     Auth,
     Profile,
-    setToken: _token => { token = _token; }
+    setToken: _token => { token = _token; },
+    token
 };
