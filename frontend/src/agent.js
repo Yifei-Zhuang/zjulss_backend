@@ -8,11 +8,10 @@ const API_ROOT = 'http://10.214.241.122:8080';
 const encode = encodeURIComponent;
 const responseBody = res => res.body;
 
-let token ="Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkNTBlYmMyOC0zNTJlLTQ2NjgtOTQ3MS1hZTlhYmNjYzhjOTYiLCJzdWIiOiI4IiwiaXNzIjoiemp1bHNzMiIsImlhdCI6MTY4MTQ1ODkxNSwiZXhwIjoxNjgxNDYyNTE1fQ.9yIXyXbXyF9HV0ljkUXInxUaht0fYW0M6nr3E8ccPNE"
 
 const tokenPlugin = req => {
-    if (token) {
-        req.set('Authorization', `${token}`);
+    if (localStorage.getItem('token')) {
+        req.set('Authorization', `${localStorage.getItem('token')}`);
     }
 }
 
@@ -46,16 +45,30 @@ const Profile ={
     getSell :() =>
         requests.get('/good/list'),
     getCart:() =>
-        requests.get('/cart/detail')
+        requests.get('/cart/detail'),
 
+    updateName:(realName)=>
+        requests.post('/user/updaterealname',{realName: realName}),
+    updateClazz:(clazz)=>
+        requests.post('/user/updateclazz',{clazz:clazz}),
+    updateSno:(sno)=>
+        requests.post('/user/updatesno',{sno:sno}),
+    updateDormitory:(dormitory)=>
+        requests.post('/user/updatedormitory',{dormitory:dormitory}),
+    updateGender:(gender)=>
+        requests.post('/user/updategender',{gender:gender}),
+    updateAvatar:(avatar)=>
+        requests.post('/user/updateavatar',{avatar:avatar})
 }
 
-
+const Good={
+    getGoodDetail: id =>
+        requests.get(`/good/detail/${id}`)
+}
 
 
 export default {
     Auth,
     Profile,
-    setToken: _token => { token = _token; },
-    token
+    Good
 };

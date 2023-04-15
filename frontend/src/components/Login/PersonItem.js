@@ -8,7 +8,7 @@ import {
     Badge,
     Box,
     Button,
-    Card,
+    Card, CardMedia,
     Container,
     Grid,
     List,
@@ -22,6 +22,32 @@ import {
 
 } from '@material-ui/core';
 
+const ItemInfo = ({item}) => {
+    return (
+        <Card>
+            <Box display="flex">
+                <CardMedia
+                    component="img"
+                    height="300"
+                    image={item.image}
+                    style={{objectFit: "contain"}}
+                    onError={(e) => {
+                        e.target.src = "https://api.dujin.org/bing/1366.php";
+                    }}
+                />
+                <Box p={2} flexGrow={1}>
+                    <Typography variant="h5">名称：{item.name}</Typography>
+                    <Typography variant="subtitle1">价格：{item.price}</Typography>
+                    <Typography variant="subtitle1">详情：{item.remark}</Typography>
+                    <Typography variant="subtitle1">类别：{item.sort}</Typography>
+                    <Typography variant="subtitle1">数量：{item.count}</Typography>
+                    <Typography variant="subtitle1">交易方式：{item.transaction}</Typography>
+
+                </Box>
+            </Box>
+        </Card>
+    )
+}
 
 const BuyingItems = ({items}) => {
     return (
@@ -32,14 +58,7 @@ const BuyingItems = ({items}) => {
                 <Grid container spacing={3}>
                     {items.map(item => (
                         <Grid item xs={12} key={item.id}>
-                            <Card>
-                                <Box p={2}>
-                                    <Typography variant="h5">{item.name}</Typography>
-                                    <Typography variant="subtitle1">价格：{item.price}</Typography>
-                                    <Button variant="contained" color="primary" onClick={() => {
-                                    }}>购买</Button>
-                                </Box>
-                            </Card>
+                            <ItemInfo item={item}/>
                         </Grid>
                     ))}
                 </Grid>
@@ -58,14 +77,7 @@ const SellingItems = ({items}) => {
                 <Grid container spacing={3}>
                     {items.map(item => (
                         <Grid item xs={12} key={item.id}>
-                            <Card>
-                                <Box p={2}>
-                                    <Typography variant="h5">{item.name}</Typography>
-                                    <Typography variant="subtitle1">价格：{item.price}</Typography>
-                                    <Button variant="contained" color="primary" onClick={() => {
-                                    }}>购买</Button>
-                                </Box>
-                            </Card>
+                            <ItemInfo item={item}/>
                         </Grid>
                     ))}
                 </Grid>
@@ -75,21 +87,24 @@ const SellingItems = ({items}) => {
     );
 };
 
-const CartItems = ({items}) => {
+const CartItems = ({items, dic}) => {
     return (
         <Box mt={3}>
             <Typography variant="h4">购物车</Typography>
             <hr/>
             {items.length > 0 ? (
-                <Grid container spacing={3}>
+                <Grid container spacing={7}>
                     {items.map(item => (
-                        <Grid item xs={12} key={item.id}>
+                        <Grid item xs={12} key={item.id} className={"border-dark"}>
                             <Card>
-                                <Box p={2}>
-                                    <Typography variant="h5">{item.name}</Typography>
-                                    <Typography variant="subtitle1">价格：{item.price}</Typography>
-                                    <Button variant="contained" color="primary" onClick={() => {
-                                    }}>购买</Button>
+                                {dic[item.qid] != null ?
+                                    <ItemInfo item={dic[item.qid]}/>
+                                    :
+                                    "商品不存在 !"
+                                }
+                                <Box display="flex">
+                                    <Typography variant="subtitle1">数量：{item.quantity}</Typography>
+                                    <Typography variant="subtitle1">收货地址：{item.address}</Typography>
                                 </Box>
                             </Card>
                         </Grid>
@@ -101,30 +116,45 @@ const CartItems = ({items}) => {
     );
 };
 
-const PersonItem = () =>{
+
+const PersonItem = () => {
     const [buyingItems, setBuyingItems] = useState([]);
     const [sellingItems, setSellingItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
-
+    const [goodsDict, setGoodsDict] = useState({});
     const [value, setValue] = useState(0);
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    const fetchData = async () => {
+        const [buyingItems, sellingItems, cartItems] = await Promise.all([
+            agent.Profile.getBuy(),
+            agent.Profile.getSell(),
+            agent.Profile.getCart()
+        ]);
+        setBuyingItems(buyingItems);
+        setSellingItems(sellingItems);
+        setCartItems(cartItems);
+
+        const goodsDict = {};
+        for (const item of cartItems) {
+            //注意这个有个qid
+            const id = item.qid;
+            if (id in goodsDict) continue
+            const goodDetail = await agent.Good.getGoodDetail(id);
+            goodsDict[id] = goodDetail;
+        }
+        setGoodsDict(goodsDict);
+
+        console.log(buyingItems)
+        console.log(sellingItems)
+        console.log(cartItems)
+        console.log(goodsDict)
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            const [buyingItems, sellingItems, cartItems] = await Promise.all([
-                agent.Profile.getBuy(),
-                agent.Profile.getSell(),
-                agent.Profile.getCart()
-            ]);
-            setBuyingItems(buyingItems);
-            setSellingItems(sellingItems);
-            setCartItems(cartItems);
-            console.log(buyingItems)
-            console.log(sellingItems)
-            console.log(cartItems)
-        };
         fetchData();
     }, []);
 
@@ -135,7 +165,7 @@ const PersonItem = () =>{
                 <Box marginTop={34}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={2}>
-                            <Box component="img" src={logo} alt="logo" mb={2}/>
+
                             <List component="nav">
                                 <ListItem
                                     button
@@ -152,7 +182,7 @@ const PersonItem = () =>{
                                     onClick={() => handleChange(null, 1)}
                                 >
                                     <ListItemIcon></ListItemIcon>
-                                    <ListItemText primary="个人出售的商品" />
+                                    <ListItemText primary="个人出售的商品"/>
                                     <Badge color="primary" badgeContent={sellingItems.length}/>
                                 </ListItem>
                                 <ListItem
@@ -174,7 +204,7 @@ const PersonItem = () =>{
                                 <SellingItems items={sellingItems}/>
                             </TabPanel>
                             <TabPanel value={value} index={2}>
-                                <CartItems items={cartItems}/>
+                                <CartItems items={cartItems} dic={goodsDict}/>
                             </TabPanel>
                         </Grid>
                     </Grid>
