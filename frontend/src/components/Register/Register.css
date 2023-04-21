@@ -1,0 +1,57 @@
+/* Register.css */
+
+.register-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: #f8f8f8;
+  }
+  
+  .register-box {
+	width: 400px;
+	padding: 40px;
+	background-color: #ffffff;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .register-title {
+	text-align: center;
+	margin-bottom: 30px;
+  }
+  
+  .register-form {
+	display: flex;
+	flex-direction: column;
+  }
+  
+  .register-input {
+	padding: 10px;
+	margin-bottom: 20px;
+	border: 1px solid #d9d9d9;
+	border-radius: 4px;
+	outline: none;
+  }
+  
+  .register-button {
+	padding: 10px;
+	background-color: #fff;
+	color: #1890ff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+  }
+  
+  .register-error {
+	color: #ff0000;
+	margin-top: 10px;
+  }
+  
+  .codeSend-button {
+	padding: 10px;
+	background-color: #1890ff;
+	color: #ffffff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+  }
