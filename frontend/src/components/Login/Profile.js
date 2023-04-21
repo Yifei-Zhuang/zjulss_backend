@@ -64,6 +64,9 @@ function Profile() {
 
         ]);
         console.log(info.msg)
+        if (info.msg != '1'){
+
+        }
         setUserInfo(getUserData(info.msg))
         console.log(userInfo)
     };
@@ -93,11 +96,11 @@ function Profile() {
                 if (allSucceeded) {
                     alert("个人信息更新成功！");
                 } else {
-                    alert("个人更新失败！");
+                    alert("个人信息更新失败！");
                 }
                 setEditing(false)
             }).catch(error => {
-                alert("个R更新失败！");
+                alert("个人信息更新失败！");
             });
         } else {
             alert("网络连接异常，请检查网络设置！");
@@ -109,10 +112,21 @@ function Profile() {
         <Box className={classes.root}>
             <Grid container spacing={3}>
                 <Grid item xs={12} className={classes.textCenter}>
-                    <Avatar alt={userInfo.realName} src={userInfo.avatar} className={classes.avatar}/>
-                    <Typography variant="h4" className={classes.title}>
-                        {userInfo.realName}
-                    </Typography>
+                    {editing ?
+                        <>
+                            <TextField label="头像" value={userInfo.avatar}
+                                       onChange={(event) => handleUserInfoChange(event, "avatar")}/>
+                            <TextField label="学号" value={userInfo.realName}
+                                       onChange={(event) => handleUserInfoChange(event, "realName")}/>
+                        </>
+                        :
+                        <>
+                            <Avatar alt={userInfo.realName} src={userInfo.avatar} className={classes.avatar}/>
+                            <Typography variant="h4" className={classes.title}>
+                                {userInfo.realName}
+                            </Typography>
+                        </>
+                    }
                 </Grid>
                 <Grid item xs={12} className={classes.textCenter}>
                     <Card>

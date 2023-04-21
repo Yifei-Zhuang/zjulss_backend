@@ -25,6 +25,7 @@ const TokenSet = () => {
         setTokenView(null);
     };
 
+
     //__________DEBUG ONLY___________
     const [tokenValue, setTokenValue] = useState(localStorage.getItem('token') || '')
 
@@ -49,7 +50,7 @@ const TokenSet = () => {
                     vertical: 'bottom',
                     horizontal: 'center',
                 }}
-            > <p>{localStorage.getItem("token")}</p>
+            ><p>{localStorage.getItem("token")}</p>
             </Popover>
         </React.Fragment>
     )
@@ -67,6 +68,14 @@ function Header() {
         setrightMenu(null);
     };
 
+    const handleLogout = () => {
+        if (!localStorage.getItem("token")){
+            alert("未登录")
+            return
+        }
+        localStorage.removeItem("token")
+        alert("当前成功登出")
+    }
 
     return (
         <AppBar position="static" style={{backgroundColor: '#eee', borderBottom: '1px solid #ccc', boxShadow: 'none'}}>
@@ -79,7 +88,7 @@ function Header() {
                 <Typography variant="h6">Second-hand trading platform</Typography>
 
                 <div style={{flexGrow: 1}}/>
-                <TokenSet></TokenSet>
+                {/*<TokenSet></TokenSet>*/}
                 <div>
                     <IconButton onClick={handleMenuClick} edge="end">
                         <img src="https://picx.zhimg.com/v2-abed1a8c04700ba7d72b45195223e0ff_l.jpg?source=172ae18b"
@@ -99,7 +108,7 @@ function Header() {
                         <MenuItem component={Link} to='/PersonItem'>个人交易</MenuItem>
                         <MenuItem component={Link} to='/Login'>登录</MenuItem>
                         <MenuItem component={Link} to='/Register'>注册</MenuItem>
-
+                        <MenuItem component={Link} onClick={handleLogout} to='/Login'>登出</MenuItem>
                     </Popover>
                 </div>
             </Toolbar>
