@@ -58,7 +58,7 @@ public class UserController {
             return BaseResponse.fail("请先请求验证码");
         }
         // fetch code from redis
-//        redisTemplate.delete(user.getPhoneNumber());
+        // redisTemplate.delete(user.getPhoneNumber());
         // check whether exist this user(by phone)
         UserInfo userInfo = userInfoService.getUserInfoByPhone(user.getPhoneNumber());
         if (userInfo != null) {
@@ -66,7 +66,7 @@ public class UserController {
         }
         // 创建对象
         userInfo = new UserInfo();
-//        userInfo.setModify(LocalDateTime.now());
+        // userInfo.setModify(LocalDateTime.now());
         userInfo.setUserName(user.getUserName());
         userInfo.setPhone(user.getPhoneNumber());
         userInfo.setRealName(user.getRealName());
@@ -94,7 +94,8 @@ public class UserController {
     @PostMapping("/changePassword")
     @ResponseBody
     @LoginRequired
-    public BaseResponse changePassword(@RequestBody Map<String, String> map, HttpServletResponse httpServletResponse) throws IOException {
+    public BaseResponse changePassword(@RequestBody Map<String, String> map, HttpServletResponse httpServletResponse)
+            throws IOException {
         UserInfo userInfo = hostHolder.getUser();
         String phoneNumber = userInfo.getPhone();
         String newPassword = map.get("newPassword");
@@ -136,7 +137,7 @@ public class UserController {
             return BaseResponse.fail("登录失败");
         }
         UserInfo userinfo = userInfoService.getUserInfoByPhone(phoneNumber);
-        String token = JwtUtil.createJWT(UUID.randomUUID().toString(), userinfo.getId(), (long) (60 * 60 * 1000));
+        String token = JwtUtil.createJWT(UUID.randomUUID().toString(), userinfo.getId(), (long) (48 * 60 * 60 * 1000));
         return BaseResponse.success(token);
     }
 
@@ -154,17 +155,17 @@ public class UserController {
     @ResponseBody
     @LoginRequired
     public BaseResponse updateRealName(@RequestBody Map<String, String> inputMap,
-                                    HttpServletResponse httpServletResponse) throws IOException {
+            HttpServletResponse httpServletResponse) throws IOException {
         if (hostHolder.getUser() == null) {
             return BaseResponse.fail("请先登录");
         }
-        if(!inputMap.containsKey("realName")){
-            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        if (!inputMap.containsKey("realName")) {
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST, "invalid req body");
         }
         UserInfo userInfo = hostHolder.getUser();
         userInfo.setRealName(inputMap.get("realName"));
-        if(!userInfoService.updateRealName(userInfo)){
-            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        if (!userInfoService.updateRealName(userInfo)) {
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "update fail");
         }
         return BaseResponse.success("success");
     }
@@ -173,17 +174,17 @@ public class UserController {
     @ResponseBody
     @LoginRequired
     public BaseResponse updateClazz(@RequestBody Map<String, String> inputMap,
-                                    HttpServletResponse httpServletResponse) throws IOException {
+            HttpServletResponse httpServletResponse) throws IOException {
         if (hostHolder.getUser() == null) {
             return BaseResponse.fail("请先登录");
         }
-        if(!inputMap.containsKey("clazz")){
-            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        if (!inputMap.containsKey("clazz")) {
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST, "invalid req body");
         }
         UserInfo userInfo = hostHolder.getUser();
         userInfo.setClazz(inputMap.get("clazz"));
-        if(!userInfoService.updateClazz(userInfo)){
-            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        if (!userInfoService.updateClazz(userInfo)) {
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "update fail");
         }
         return BaseResponse.success("success");
     }
@@ -192,17 +193,17 @@ public class UserController {
     @ResponseBody
     @LoginRequired
     public BaseResponse updateSno(@RequestBody Map<String, String> inputMap,
-                                    HttpServletResponse httpServletResponse) throws IOException {
+            HttpServletResponse httpServletResponse) throws IOException {
         if (hostHolder.getUser() == null) {
             return BaseResponse.fail("请先登录");
         }
-        if(!inputMap.containsKey("sno")){
-            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        if (!inputMap.containsKey("sno")) {
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST, "invalid req body");
         }
         UserInfo userInfo = hostHolder.getUser();
         userInfo.setSno(inputMap.get("sno"));
-        if(!userInfoService.updateSno(userInfo)){
-            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        if (!userInfoService.updateSno(userInfo)) {
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "update fail");
         }
         return BaseResponse.success("success");
     }
@@ -211,17 +212,17 @@ public class UserController {
     @ResponseBody
     @LoginRequired
     public BaseResponse updateDormitory(@RequestBody Map<String, String> inputMap,
-                                  HttpServletResponse httpServletResponse) throws IOException {
+            HttpServletResponse httpServletResponse) throws IOException {
         if (hostHolder.getUser() == null) {
             return BaseResponse.fail("请先登录");
         }
-        if(!inputMap.containsKey("dormitory")){
-            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        if (!inputMap.containsKey("dormitory")) {
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST, "invalid req body");
         }
         UserInfo userInfo = hostHolder.getUser();
         userInfo.setDormitory(inputMap.get("dormitory"));
-        if(!userInfoService.updateDormitory(userInfo)){
-            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        if (!userInfoService.updateDormitory(userInfo)) {
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "update fail");
         }
         return BaseResponse.success("success");
     }
@@ -230,40 +231,38 @@ public class UserController {
     @ResponseBody
     @LoginRequired
     public BaseResponse updateGender(@RequestBody Map<String, String> inputMap,
-                                        HttpServletResponse httpServletResponse) throws IOException {
+            HttpServletResponse httpServletResponse) throws IOException {
         if (hostHolder.getUser() == null) {
             return BaseResponse.fail("请先登录");
         }
-        if(!inputMap.containsKey("gender")){
-            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        if (!inputMap.containsKey("gender")) {
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST, "invalid req body");
         }
         UserInfo userInfo = hostHolder.getUser();
         userInfo.setGender(inputMap.get("gender"));
-        if(!userInfoService.updateGender(userInfo)){
-            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        if (!userInfoService.updateGender(userInfo)) {
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "update fail");
         }
         return BaseResponse.success("success");
     }
-
 
     @PostMapping("/updateavatar")
     @ResponseBody
     @LoginRequired
     public BaseResponse updateAvatar(@RequestBody Map<String, String> inputMap,
-                                     HttpServletResponse httpServletResponse) throws IOException {
+            HttpServletResponse httpServletResponse) throws IOException {
         if (hostHolder.getUser() == null) {
             return BaseResponse.fail("请先登录");
         }
-        if(!inputMap.containsKey("avatar")){
-            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST,"invalid req body");
+        if (!inputMap.containsKey("avatar")) {
+            return BaseResponse.fail(HttpServletResponse.SC_BAD_REQUEST, "invalid req body");
         }
         UserInfo userInfo = hostHolder.getUser();
         userInfo.setAvatar(inputMap.get("avatar"));
-        if(!userInfoService.updateAvatar(userInfo)){
-            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"update fail");
+        if (!userInfoService.updateAvatar(userInfo)) {
+            return BaseResponse.fail(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "update fail");
         }
         return BaseResponse.success("success");
     }
-
 
 }
