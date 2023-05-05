@@ -5,6 +5,8 @@ import com.example.zjulss.entity.GoodForSale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GoodForSaleService {
     @Autowired
@@ -12,6 +14,10 @@ public class GoodForSaleService {
 
     public GoodForSale getGoodInfo(int qid) {
         return goodForSaleMapper.getGood(qid);
+    }
+
+    public List<GoodForSale> getUserSells(int uid){
+        return goodForSaleMapper.getUserSells(uid);
     }
 
     public boolean insertGood(GoodForSale goodForSale) {

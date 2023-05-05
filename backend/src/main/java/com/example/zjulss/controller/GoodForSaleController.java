@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -25,6 +26,18 @@ public class GoodForSaleController {
 
     @Autowired
     GoodForSaleService goodForSaleService;
+
+    @GetMapping("/list")
+    @ResponseBody
+    @LoginRequired
+    public List<GoodForSale> getUserSells(HttpServletResponse httpServletResponse) throws IOException {
+        UserInfo userInfo = hostHolder.getUser();
+        if(userInfo == null){
+            httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,"need login first");
+            return null;
+        }
+        return goodForSaleService.getUserSells(userInfo.getId());
+    }
 
     @PostMapping("/add")
     @ResponseBody

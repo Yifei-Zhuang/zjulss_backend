@@ -3,6 +3,8 @@ package com.example.zjulss.dao;
 import com.example.zjulss.entity.GoodForSale;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface GoodForSaleMapper {
     @Insert({
@@ -12,6 +14,12 @@ public interface GoodForSaleMapper {
     })
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insertGood(GoodForSale goodForSale);
+
+
+    @Select({
+            "select * from good where uid = #{uid}"
+    })
+    List<GoodForSale> getUserSells(int uid);
 
     //update
     @Select({
