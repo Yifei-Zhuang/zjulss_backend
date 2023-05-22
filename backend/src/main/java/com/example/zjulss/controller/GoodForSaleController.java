@@ -111,4 +111,22 @@ public class GoodForSaleController {
         }
         return goodForSaleService.updateGoodCount(Integer.parseInt(id), Integer.parseInt(count));
     }
+
+    @GetMapping("/feed")
+    @ResponseBody
+    public List<GoodForSale> getRecommendGood(){
+        return goodForSaleService.getGoodFeed();
+    }
+    @GetMapping("/all")
+    @ResponseBody
+    public List<GoodForSale> getAllGoodOfLimit(@RequestParam(value = "limit",required = false,defaultValue = "100") Integer limit,@RequestParam(value = "offset",required = false,defaultValue = "0") Integer offset){
+        return goodForSaleService.getGoodsByOffsetAndLimit(offset,limit);
+    }
+
+    @GetMapping("/getBySort")
+    @ResponseBody
+    public List<GoodForSale> getAllGoodOfSort(@RequestParam(value = "sort",required = true) int sort){
+            return goodForSaleService.getGoodsBySort(sort);
+    }
+    //TODO 留言信息服务
 }
