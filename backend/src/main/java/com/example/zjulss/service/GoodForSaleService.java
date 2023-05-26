@@ -5,6 +5,7 @@ import com.example.zjulss.entity.GoodForSale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,5 +39,17 @@ public class GoodForSaleService {
 
     public boolean updateGoodCount(int id, int count) {
         return goodForSaleMapper.updateCount(count, id) == 1;
+    }
+
+    public List<GoodForSale> getGoodFeed(){
+        return new ArrayList<>(goodForSaleMapper.getTenLatestGoods());
+    }
+
+    public List<GoodForSale> getGoodsByOffsetAndLimit(int offset,int limit){
+        return new ArrayList<>(goodForSaleMapper.getGoodsByOffsetAndLimit(offset,limit));
+    }
+
+    public List<GoodForSale> getGoodsBySort(int sort){
+        return new ArrayList<>(goodForSaleMapper.getGoodsBySort(sort));
     }
 }

@@ -57,5 +57,6 @@ public class GoodForSale {
 
     @Field(type = FieldType.Text, name = "image")
     private String image;
+    private String idForElastic;
 
 }

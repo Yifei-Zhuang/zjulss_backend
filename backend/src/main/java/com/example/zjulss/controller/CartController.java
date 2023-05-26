@@ -86,11 +86,15 @@ public class CartController {
     @LoginRequired
     public BaseResponse setQuantity(@RequestBody Cart cart, HttpServletResponse httpServletResponse) throws IOException {
         cart.setModify(LocalDateTime.now());
+        int stock = goodForSaleService.getGoodInfo(cart.getQid()).getCount();
+        if(cart.getQuantity() > stock) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "quantity exceed stock");
+            return BaseResponse.fail();
+        }
         if (!cartService.setQuantity(cart)) {
             httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "invalid post body");
             return BaseResponse.fail();
         }
-        ;
         return BaseResponse.success();
     }
 }

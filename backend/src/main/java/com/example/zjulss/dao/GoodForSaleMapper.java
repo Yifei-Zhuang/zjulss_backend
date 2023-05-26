@@ -27,10 +27,28 @@ public interface GoodForSaleMapper {
     })
     GoodForSale getGood(int id);
 
+    @Select({
+            "select * from good where display = 1 order by id desc limit 0,10"
+    })
+    List<GoodForSale> getTenLatestGoods();
+
+    @Select({
+            "select * from good where display = 1 order by id desc limit #{offset},#{limit}"
+    })
+    List<GoodForSale> getGoodsByOffsetAndLimit(int offset,int limit);
+
+    @Select({
+            "select * from good where display = 1 and sort = #{sort} order by id desc"
+    })
+    List<GoodForSale> getGoodsBySort(int sort);
+
+
     @Update({
             "update good set display = 0 where id = #{id} and display = 1"
     })
     int deleteGood(int id);
+
+
 
     //update
     @Update({

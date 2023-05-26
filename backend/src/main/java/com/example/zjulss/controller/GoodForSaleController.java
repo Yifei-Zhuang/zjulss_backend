@@ -121,22 +121,21 @@ public class GoodForSaleController {
         return goodForSaleService.updateGoodCount(Integer.parseInt(id), Integer.parseInt(count));
     }
 
-    /**
-     * 查询板块
-     * @throws JsonProcessingException
-     * @throws JsonMappingException
-     */
-
-    //通过名字查询商品列表
-    @GetMapping(value = "/name/{name}")
-    public List<GoodForSale> goodsListByName(@PathVariable("name") String name) throws JsonMappingException, JsonProcessingException{
-        return searchService.findByName(name);
+    @GetMapping("/feed")
+    @ResponseBody
+    public List<GoodForSale> getRecommendGood(){
+        return goodForSaleService.getGoodFeed();
+    }
+    @GetMapping("/all")
+    @ResponseBody
+    public List<GoodForSale> getAllGoodOfLimit(@RequestParam(value = "limit",required = false,defaultValue = "100") Integer limit,@RequestParam(value = "offset",required = false,defaultValue = "0") Integer offset){
+        return goodForSaleService.getGoodsByOffsetAndLimit(offset,limit);
     }
 
-
-    // //查询商品
-    // @GetMapping(value = "/id/{id}")
-    // public  Result<GoodForSale> goodsFindOne(@PathVariable("id") long id) {
-    //     return  ResultUtil.success(ResultEnum.SUCCESS,searchService.findById(id));
-    // }
+    @GetMapping("/getBySort")
+    @ResponseBody
+    public List<GoodForSale> getAllGoodOfSort(@RequestParam(value = "sort",required = true) int sort){
+            return goodForSaleService.getGoodsBySort(sort);
+    }
+    //TODO 留言信息服务
 }
