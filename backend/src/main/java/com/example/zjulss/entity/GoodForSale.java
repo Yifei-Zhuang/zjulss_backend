@@ -22,5 +22,6 @@ public class GoodForSale {
     private int sales;
     private int uid;
     private String image;
+    private String idForElastic;
 
 }
