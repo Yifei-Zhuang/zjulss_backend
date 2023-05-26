@@ -5,8 +5,12 @@ import com.example.zjulss.entity.GoodForSale;
 import com.example.zjulss.entity.UserInfo;
 import com.example.zjulss.response.BaseResponse;
 import com.example.zjulss.service.GoodForSaleService;
+import com.example.zjulss.service.SearchService;
 import com.example.zjulss.utils.HostHolder;
 import com.example.zjulss.utils.MyStringUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +30,8 @@ public class GoodForSaleController {
 
     @Autowired
     GoodForSaleService goodForSaleService;
+    @Autowired
+    private SearchService searchService;
 
     @GetMapping("/list")
     @ResponseBody
@@ -47,6 +53,7 @@ public class GoodForSaleController {
         goodForSale.setModify(LocalDateTime.now());
         goodForSale.setUid(userInfo.getId());
         if (goodForSaleService.insertGood(goodForSale)) {
+            // searchService.index(goodForSale.getId());
             return BaseResponse.success();
         }
         return BaseResponse.fail("添加失败");
@@ -65,6 +72,7 @@ public class GoodForSaleController {
             return BaseResponse.fail(HttpServletResponse.SC_UNAUTHORIZED, "您不是商品的发布者");
         }
         if (goodForSaleService.removeGood(id)) {
+            searchService.remove(id);
             return BaseResponse.fail("删除成功");
         }
         return BaseResponse.fail("删除失败");
@@ -85,6 +93,7 @@ public class GoodForSaleController {
             httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
             return false;
         }
+
         return goodForSaleService.updateGoodName(Integer.parseInt(id), newName);
     }
 
@@ -111,4 +120,23 @@ public class GoodForSaleController {
         }
         return goodForSaleService.updateGoodCount(Integer.parseInt(id), Integer.parseInt(count));
     }
+
+    /**
+     * 查询板块
+     * @throws JsonProcessingException
+     * @throws JsonMappingException
+     */
+
+    //通过名字查询商品列表
+    @GetMapping(value = "/name/{name}")
+    public List<GoodForSale> goodsListByName(@PathVariable("name") String name) throws JsonMappingException, JsonProcessingException{
+        return searchService.findByName(name);
+    }
+
+
+    // //查询商品
+    // @GetMapping(value = "/id/{id}")
+    // public  Result<GoodForSale> goodsFindOne(@PathVariable("id") long id) {
+    //     return  ResultUtil.success(ResultEnum.SUCCESS,searchService.findById(id));
+    // }
 }
