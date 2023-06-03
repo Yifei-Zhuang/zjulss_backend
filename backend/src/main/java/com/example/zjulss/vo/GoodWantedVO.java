@@ -1,6 +1,6 @@
 package com.example.zjulss.vo;
 
-import jakarta.validation.constraints.NotBlank;
+//import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GoodWantedVO {
-    @NotBlank
+//    @NotBlank
     @NotNull
     private String name;
     private String remark;

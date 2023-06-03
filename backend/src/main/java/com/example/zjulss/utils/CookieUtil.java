@@ -1,8 +1,7 @@
 package com.example.zjulss.utils;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
 public class CookieUtil {
 
     public static String getValue(HttpServletRequest request, String name) {

@@ -13,6 +13,8 @@ public class GoodForSaleService {
     @Autowired
     GoodForSaleMapper goodForSaleMapper;
 
+
+
     public GoodForSale getGoodInfo(int qid) {
         return goodForSaleMapper.getGood(qid);
     }

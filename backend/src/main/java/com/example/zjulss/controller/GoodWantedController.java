@@ -6,8 +6,7 @@ import com.example.zjulss.entity.UserInfo;
 import com.example.zjulss.service.GoodWantedService;
 import com.example.zjulss.utils.HostHolder;
 import com.example.zjulss.utils.MyStringUtils;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -32,7 +31,7 @@ public class GoodWantedController {
     @PostMapping("/add")
     @ResponseBody
     @LoginRequired
-    public boolean addWanted(@Valid @RequestBody GoodWanted goodWanted) {
+    public boolean addWanted( @RequestBody GoodWanted goodWanted) {
         UserInfo userInfo = hostHolder.getUser();
         goodWanted.setUid(userInfo.getId());
         goodWanted.setModify(LocalDateTime.now());
