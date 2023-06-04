@@ -2,10 +2,12 @@ package com.example.zjulss.controller;
 
 import com.example.zjulss.annotation.LoginRequired;
 import com.example.zjulss.entity.GoodForSale;
+import com.example.zjulss.entity.GoodMessage;
 import com.example.zjulss.entity.UserInfo;
 import com.example.zjulss.response.BaseResponse;
 import com.example.zjulss.service.GoodESService;
 import com.example.zjulss.service.GoodForSaleService;
+import com.example.zjulss.service.GoodMessageService;
 import com.example.zjulss.utils.HostHolder;
 import com.example.zjulss.utils.MyStringUtils;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +32,9 @@ public class GoodForSaleController {
 
     @Autowired
     GoodESService goodESService;
+
+    @Autowired
+    GoodMessageService goodMessageService;
 
     @GetMapping("/list")
     @ResponseBody
@@ -142,5 +147,21 @@ public class GoodForSaleController {
     }
 
     //TODO 留言信息服务
+    @PostMapping("/comment")
+    @ResponseBody
+    public BaseResponse addComment(@RequestBody GoodMessage goodMessage, HttpServletResponse httpServletResponse) throws IOException {
+        if (!MyStringUtils.checkIsValid(goodMessage.getContent())) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
+            return BaseResponse.fail("留言内容不能为空");
+        }
+        try {
+            if (goodMessageService.insertGoodMessage(goodMessage.getQid(), goodMessage.getContent(), goodMessage.getUid())) {
+                return BaseResponse.success();
+            }
+        }catch(Exception e){
+            return BaseResponse.fail(e.toString());
+        }
+        return  BaseResponse.fail("留言失败");
+    }
 
 }
