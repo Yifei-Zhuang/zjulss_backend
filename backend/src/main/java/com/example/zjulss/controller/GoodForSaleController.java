@@ -149,13 +149,15 @@ public class GoodForSaleController {
     //TODO 留言信息服务
     @PostMapping("/comment")
     @ResponseBody
+    @LoginRequired
     public BaseResponse addComment(@RequestBody GoodMessage goodMessage, HttpServletResponse httpServletResponse) throws IOException {
         if (!MyStringUtils.checkIsValid(goodMessage.getContent())) {
             httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
             return BaseResponse.fail("留言内容不能为空");
         }
         try {
-            if (goodMessageService.insertGoodMessage(goodMessage.getQid(), goodMessage.getContent(), goodMessage.getUid())) {
+            UserInfo userInfo = hostHolder.getUser();
+            if (goodMessageService.insertGoodMessage(goodMessage.getQid(), goodMessage.getContent(), userInfo.getId())) {
                 return BaseResponse.success();
             }
         }catch(Exception e){
