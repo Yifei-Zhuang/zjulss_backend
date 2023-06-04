@@ -4,6 +4,7 @@ import com.example.zjulss.annotation.LoginRequired;
 import com.example.zjulss.entity.GoodForSale;
 import com.example.zjulss.entity.UserInfo;
 import com.example.zjulss.response.BaseResponse;
+import com.example.zjulss.service.GoodESService;
 import com.example.zjulss.service.GoodForSaleService;
 import com.example.zjulss.utils.HostHolder;
 import com.example.zjulss.utils.MyStringUtils;
@@ -26,6 +27,9 @@ public class GoodForSaleController {
 
     @Autowired
     GoodForSaleService goodForSaleService;
+
+    @Autowired
+    GoodESService goodESService;
 
     @GetMapping("/list")
     @ResponseBody
@@ -128,5 +132,15 @@ public class GoodForSaleController {
     public List<GoodForSale> getAllGoodOfSort(@RequestParam(value = "sort",required = true) int sort){
             return goodForSaleService.getGoodsBySort(sort);
     }
+
+    //ES 部分,仅有模糊搜索实现
+    @GetMapping("/name")
+    @ResponseBody
+    public List<GoodForSale> goodsListByNameContaining(@RequestParam(value="name",required = true) String name,@RequestParam(value="page",required = true) int page,@RequestParam(value="sort",required = false) String sort,HttpServletResponse httpServletResponse) throws IOException {
+        boolean isSortByPrice = sort == null;
+        return goodESService.searchGoodForSale(name,page,isSortByPrice);
+    }
+
     //TODO 留言信息服务
+
 }

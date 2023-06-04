@@ -42,6 +42,9 @@ public class GoodESService {
     public void deleteGoodForSale(GoodForSale goodForSale){
         goodForSaleRepository.deleteById(goodForSale.getId());
     }
+    public void deleteGoodForSaleById(int id){
+        goodForSaleRepository.deleteById(id);
+    }
 
     public void updateGoodForSale(GoodForSale goodForSale){
         goodForSaleRepository.save(goodForSale);

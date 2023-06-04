@@ -13,6 +13,8 @@ public class GoodForSaleService {
     @Autowired
     GoodForSaleMapper goodForSaleMapper;
 
+    @Autowired
+    GoodESService goodESService;
 
 
     public GoodForSale getGoodInfo(int qid) {
@@ -24,22 +26,33 @@ public class GoodForSaleService {
     }
 
     public boolean insertGood(GoodForSale goodForSale) {
+        goodESService.insertGoodForSale(goodForSale);
         return goodForSaleMapper.insertGood(goodForSale) > 0;
     }
 
     public boolean removeGood(int id) {
+        goodESService.deleteGoodForSaleById(id);
         return goodForSaleMapper.deleteGood(id) > 0;
     }
 
     public boolean updateGoodName(int id, String newName) {
+        GoodForSale good = getGoodInfo(id);
+        good.setName(newName);
+        goodESService.updateGoodForSale(good);
         return goodForSaleMapper.updateName(newName, id) == 1;
     }
 
     public boolean updateGoodPrice(int id, Double price) {
+        GoodForSale good = getGoodInfo(id);
+        good.setPrice(price);
+        goodESService.updateGoodForSale(good);
         return goodForSaleMapper.updatePrice(price, id) == 1;
     }
 
     public boolean updateGoodCount(int id, int count) {
+        GoodForSale good = getGoodInfo(id);
+        good.setCount(count);
+        goodESService.updateGoodForSale(good);
         return goodForSaleMapper.updateCount(count, id) == 1;
     }
 
