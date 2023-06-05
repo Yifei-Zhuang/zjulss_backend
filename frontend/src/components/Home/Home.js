@@ -5,7 +5,10 @@ import agent from '../../agent.js'
 
 const Home = () => {
     return (
-        <>test home</>
+        // <>test home</>
+        <ul>
+            <li><Link to='/Details'>Details</Link></li>
+        </ul>
     )
 }
 export default Home
