@@ -141,8 +141,8 @@ public class GoodForSaleController {
     //ES 部分,仅有模糊搜索实现
     @GetMapping("/name")
     @ResponseBody
-    public List<GoodForSale> goodsListByNameContaining(@RequestParam(value="name",required = true) String name,@RequestParam(value="page",required = true) int page,@RequestParam(value="sort",required = false) String sort,HttpServletResponse httpServletResponse) throws IOException {
-        boolean isSortByPrice = sort == null;
+    public List<GoodForSale> goodsListByNameContaining(@RequestParam(value="name",required = true) String name,@RequestParam(value="page",required = true) int page,@RequestParam(value="sort",required = false) String sortByPrice,HttpServletResponse httpServletResponse) throws IOException {
+        boolean isSortByPrice = sortByPrice == null;
         return goodESService.searchGoodForSale(name,page,isSortByPrice);
     }
 
@@ -157,7 +157,8 @@ public class GoodForSaleController {
         }
         try {
             UserInfo userInfo = hostHolder.getUser();
-            if (goodMessageService.insertGoodMessage(goodMessage.getQid(), goodMessage.getContent(), userInfo.getId())) {
+            goodMessage.setUid(userInfo.getId());
+            if (goodMessageService.insertGoodMessage(goodMessage)){
                 return BaseResponse.success();
             }
         }catch(Exception e){

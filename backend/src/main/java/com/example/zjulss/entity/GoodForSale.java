@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -16,7 +17,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public class GoodForSale {
     @Id
     private int id;
-    @Field(type = FieldType.Text)
+//    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modify;
     @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String name;

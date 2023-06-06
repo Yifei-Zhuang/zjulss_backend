@@ -79,8 +79,8 @@ public class GoodESService {
 
                     String id = hit.getSourceAsMap().get("id").toString();
                     good.setId(Integer.valueOf(id));
-                    String modify = hit.getSourceAsMap().get("modify").toString();
-                    good.setModify(LocalDateTime.from((new Date(Long.valueOf(modify))).toInstant()));
+//                    String modify = hit.getSourceAsMap().get("modify").toString();
+//                    good.setModify(LocalDateTime.from((new Date(Long.valueOf(modify))).toInstant()));
                     String name = hit.getSourceAsMap().get("name").toString();
                     good.setName(name);
                     String remark = hit.getSourceAsMap().get("remark").toString();

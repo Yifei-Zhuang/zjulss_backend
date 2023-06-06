@@ -1,6 +1,7 @@
 package com.example.zjulss.service;
 
 import com.example.zjulss.dao.GoodMessageMapper;
+import com.example.zjulss.entity.GoodMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ public class GoodMessageService {
     @Autowired
     GoodMessageMapper goodMessageMapper;
 
-    public boolean insertGoodMessage(int qid, String content, int uid) {
-        return goodMessageMapper.insertGoodMessage(qid, content, uid, LocalDateTime.from(new Date().toInstant())) > 0;
+    public boolean insertGoodMessage(GoodMessage goodMessage) {
+        goodMessage.setModify(LocalDateTime.now());
+        return goodMessageMapper.insertGoodMessage(goodMessage) > 0;
     }
 }
