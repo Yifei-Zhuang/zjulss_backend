@@ -1,13 +1,15 @@
 
 .goods-box {
     padding-left: 30px;
+    padding-top: 40px;
+    padding-bottom: 50px;
 }
 
 .goods-name {
     font-size: 28px;
     font-weight: 700;
     line-height: 40px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .goods-image {
@@ -17,7 +19,7 @@
 .goods-desc {
     float: left;
     margin-left: 20px;
-    margin-top: 42px;
+    margin-top: 58px;
     font-size: 18px;
     font-weight: 600;
     line-height: 30px;
@@ -25,4 +27,21 @@
 
 .goods-desc-detail {
     line-height: 27px;
+}
+
+.goods-desc-box {
+    line-height: 34px;
+
+
+}
+
+.goods-desc-name{
+    display: inline-block;
+    color: grey;
+    width: 150px;
+    font-weight: 500;
+}
+
+.goods-desc-data{
+
 }

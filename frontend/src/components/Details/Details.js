@@ -27,14 +27,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         backgroundColor: '#F5F5F5',
         margin: 60
-
-
-    },
-    cardMedia: {
-
     }
-
-
 }))
 
 function Details () {
@@ -44,12 +37,34 @@ function Details () {
         const info = await agent.Good.getGoodDetail(3);
         console.log(info.msg)
         setGoodInfo(info)
+
         console.log(goodInfo)
     }
 
     useEffect(() => {
         fetchData()
     }, [])
+
+    const transENUM = {
+        1: "邮寄",
+        2: "自提",
+        3: "当面交易",
+    }
+
+    const sortENUM = {
+        1: "电子产品",
+        2: "服饰",
+        3: "书籍",
+        4: "票类",
+        5: "食品",
+        6: "日用品",
+        7: "其他",
+    }
+
+    const displayENUM = {
+        1: "在售",
+        0: "下架",
+    }
 
     return (
         <Box className={classes.root} >
@@ -69,19 +84,80 @@ function Details () {
                             />
                         </span>
                         <span className="goods-desc">
-                            <div>商品信息更新时间：{goodInfo.modify}</div>
-                            <div>商品成色：{goodInfo.level}</div>
-                            <div>商品描述：{goodInfo.remark}</div>
-                            <div>商品价格：{goodInfo.price}</div>
-                            <div>商品类别：{goodInfo.sort}</div>
-                            <div>商品数量：{goodInfo.count}</div>
-                            <div>商品状态：{goodInfo.display}</div>
-                            <div>交易方式：{goodInfo.transaction}</div>
-                            <div>商品销量：{goodInfo.sales}</div>
-                            <div>卖家id：{goodInfo.uid}</div>
+                            <div className="goods-desc-box">
+                                <span className="goods-desc-name">
+                                    商品成色：
+                                </span>
+                                <span className="goods-desc-data">
+                                    {goodInfo.level}成新
+                                </span>
+                            </div>
+                            <div className="goods-desc-box">
+                                <span className="goods-desc-name">
+                                    商品描述：
+                                </span>
+                                <span className="goods-desc-data">
+                                    {goodInfo.remark}
+                                </span>
+                            </div>
+                            <div className="goods-desc-box">
+                                <span className="goods-desc-name">
+                                    商品类别：
+                                </span>
+                                <span className="goods-desc-data">
+                                    {sortENUM[goodInfo.sort]}
+                                </span>
+                            </div>
+                            <div className="goods-desc-box">
+                                <span className="goods-desc-name">
+                                    交易方式：
+                                </span>
+                                <span className="goods-desc-data">
+                                    {transENUM[goodInfo.transaction]}
+                                </span>
+                            </div>
+                            <div className="goods-desc-box">
+                                <span className="goods-desc-name">
+                                    商品数量：
+                                </span>
+                                <span className="goods-desc-data">
+                                    {goodInfo.count}
+                                </span>
+                            </div>
+                            <div className="goods-desc-box">
+                                <span className="goods-desc-name">
+                                    商品销量：
+                                </span>
+                                <span className="goods-desc-data">
+                                    {goodInfo.sales}
+                                </span>
+                            </div>
+                            <div className="goods-desc-box">
+                                <span className="goods-desc-name">
+                                    商品状态：
+                                </span>
+                                <span className="goods-desc-data">
+                                    {displayENUM[goodInfo.display]}
+                                </span>
+                            </div>
+                            <div className="goods-desc-box">
+                                <span className="goods-desc-name">
+                                    商品价格：
+                                </span>
+                                <span className="goods-desc-data">
+                                    {goodInfo.price.toFixed(2)}元
+                                </span>
+                            </div>
+                            <div className="goods-desc-box">
+                                <span className="goods-desc-name">
+                                    信息更新时间：
+                                </span>
+                                <span className="goods-desc-data">
+                                    {goodInfo.modify}
+                                </span>
+                            </div>
+                            {/*<div>卖家id：{goodInfo.uid}</div>*/}
                         </span>
-
-
                     </div>
                 </Grid>
             </Grid>
