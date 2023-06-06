@@ -26,8 +26,11 @@ public class GoodForSaleService {
     }
 
     public boolean insertGood(GoodForSale goodForSale) {
-        goodESService.insertGoodForSale(goodForSale);
-        return goodForSaleMapper.insertGood(goodForSale) > 0;
+        if(goodForSaleMapper.insertGood(goodForSale) > 0){
+            goodESService.insertGoodForSale(goodForSale);
+            return true;
+        }
+        return false;
     }
 
     public boolean removeGood(int id) {

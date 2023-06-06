@@ -15,7 +15,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @NoArgsConstructor
 @Document(indexName = "goods", type = "_doc")
 public class GoodForSale {
-    @Id
+
+    @Field(type = FieldType.Integer)
     private int id;
 //    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modify;
@@ -41,7 +42,7 @@ public class GoodForSale {
     private int uid;
     @Field(type = FieldType.Text)
     private String image;
-//    @Id
+    @Id
     private String idForElastic;
 
 }
