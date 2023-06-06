@@ -93,9 +93,15 @@ const Good={
         requests.get(`/good/detail/${id}`)
 }
 
+const Cart={
+	addToCart: (qid) =>
+		requests.post('cart/add', {qid: qid})
+}
+
 
 export default {
     Auth,
     Profile,
-    Good
+    Good,
+	Cart
 };
