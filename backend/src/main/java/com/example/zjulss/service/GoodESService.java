@@ -4,6 +4,7 @@ import com.example.zjulss.entity.GoodForSale;
 import com.example.zjulss.repository.GoodForSaleRepository;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -49,7 +50,7 @@ public class GoodESService {
     public void updateGoodForSale(GoodForSale goodForSale){
         goodForSaleRepository.save(goodForSale);
     }
-    public List<GoodForSale> searchGoodForSale(String keyWord,int pageNum,boolean isSortByPrice){
+    public List<GoodForSale> searchGoodForSale(String keyWord,int pageNum,boolean isSortByPrice,boolean isSortBySort,int sort){
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder()
                 .withQuery(QueryBuilders.multiMatchQuery(keyWord, "name", "remark"))
                 .withSort(SortBuilders.fieldSort("id").order(SortOrder.ASC))
@@ -61,7 +62,9 @@ public class GoodESService {
         if(isSortByPrice){
             nativeSearchQueryBuilder.withSort(SortBuilders.fieldSort("price").order(SortOrder.ASC));
         }
-
+        if(isSortBySort) {
+            nativeSearchQueryBuilder.withQuery(new RangeQueryBuilder("sort").from(sort).to(sort));
+        }
         return searchHelper(nativeSearchQueryBuilder.build());
     }
     private List<GoodForSale> searchHelper(SearchQuery searchQuery){

@@ -19,7 +19,7 @@ public class GoodForSale {
     private int id;
 //    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modify;
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String name;
     @Field(type = FieldType.Integer)
     private int level;

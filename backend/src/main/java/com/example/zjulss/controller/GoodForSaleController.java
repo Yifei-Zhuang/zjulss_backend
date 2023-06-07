@@ -192,9 +192,10 @@ public class GoodForSaleController {
     //ES 部分,仅有模糊搜索实现
     @GetMapping("/name")
     @ResponseBody
-    public List<GoodForSale> goodsListByNameContaining(@RequestParam(value="name",required = true) String name,@RequestParam(value="page",required = true) int page,@RequestParam(value="sort",required = false) String sortByPrice,HttpServletResponse httpServletResponse) throws IOException {
-        boolean isSortByPrice = sortByPrice == null;
-        return goodESService.searchGoodForSale(name,page,isSortByPrice);
+    public List<GoodForSale> goodsListByNameContaining(@RequestParam(value="name",required = true) String name,@RequestParam(value="page",required = true) int page,@RequestParam(value="sortByPrice",required = false) String sortByPrice,@RequestParam(value="searchSort",required = false) String searchSort,@RequestParam(value="sort",required = false,defaultValue = "0") int sort,HttpServletResponse httpServletResponse) throws IOException {
+        boolean isSortByPrice = !"false".equals(sortByPrice);
+        boolean isSearchSort = !"false".equals(searchSort);
+        return goodESService.searchGoodForSale(name,page,isSortByPrice,isSearchSort,sort);
     }
 
     //TODO 留言信息服务
@@ -217,7 +218,7 @@ public class GoodForSaleController {
         }
         return  BaseResponse.fail("留言失败");
     }
-
+    @Deprecated
     @GetMapping("/importES")
     @ResponseBody
     public boolean insertAllGoodToES(){

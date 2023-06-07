@@ -98,10 +98,15 @@ public class GoodForSaleService {
     public List<GoodForSale> getGoodsBySort(int sort){
         return new ArrayList<>(goodForSaleMapper.getGoodsBySort(sort));
     }
+    @Deprecated
     public void insertAllToESSErvice(){
         List<GoodForSale> goods = goodForSaleMapper.getAllGoods();
-        for(GoodForSale good:goods){
-            goodESService.insertGoodForSale(good);
+        for(int i = 56172;i < goods.size();i++){
+            System.out.println(i);
+            goodESService.insertGoodForSale(goods.get(i));
         }
+//        for(GoodForSale good:goods){
+//            goodESService.insertGoodForSale(good);
+//        }
     }
 }
