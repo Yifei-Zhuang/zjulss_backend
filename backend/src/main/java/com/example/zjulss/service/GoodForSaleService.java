@@ -59,6 +59,34 @@ public class GoodForSaleService {
         return goodForSaleMapper.updateCount(count, id) == 1;
     }
 
+    public boolean updateGoodSort(int id, int sort) {
+        GoodForSale good = getGoodInfo(id);
+        good.setSort(sort);
+        goodESService.updateGoodForSale(good);
+        return goodForSaleMapper.updateSort(sort, id) == 1;
+    }
+
+    public boolean updateGoodRemark(int id, String remark) {
+        GoodForSale good = getGoodInfo(id);
+        good.setRemark(remark);
+        goodESService.updateGoodForSale(good);
+        return goodForSaleMapper.updateRemark(remark, id) == 1;
+    }
+
+    public boolean updateGoodTransaction(int id, int transaction) {
+        GoodForSale good = getGoodInfo(id);
+        good.setTransaction(transaction);
+        goodESService.updateGoodForSale(good);
+        return goodForSaleMapper.updateTransaction(transaction, id) == 1;
+    }
+
+    public boolean updateGoodImage(int id, String image) {
+        GoodForSale good = getGoodInfo(id);
+        good.setImage(image);
+        goodESService.updateGoodForSale(good);
+        return goodForSaleMapper.updateImage(image, id) == 1;
+    }
+
     public List<GoodForSale> getGoodFeed(){
         return new ArrayList<>(goodForSaleMapper.getTenLatestGoods());
     }
@@ -69,5 +97,11 @@ public class GoodForSaleService {
 
     public List<GoodForSale> getGoodsBySort(int sort){
         return new ArrayList<>(goodForSaleMapper.getGoodsBySort(sort));
+    }
+    public void insertAllToESSErvice(){
+        List<GoodForSale> goods = goodForSaleMapper.getAllGoods();
+        for(GoodForSale good:goods){
+            goodESService.insertGoodForSale(good);
+        }
     }
 }

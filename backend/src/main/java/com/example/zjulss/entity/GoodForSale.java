@@ -15,12 +15,11 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @NoArgsConstructor
 @Document(indexName = "goods", type = "_doc")
 public class GoodForSale {
-
-    @Field(type = FieldType.Integer)
+    @Id
     private int id;
 //    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modify;
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
     private String name;
     @Field(type = FieldType.Integer)
     private int level;
@@ -42,7 +41,7 @@ public class GoodForSale {
     private int uid;
     @Field(type = FieldType.Text)
     private String image;
-    @Id
+//    @Id
     private String idForElastic;
 
 }

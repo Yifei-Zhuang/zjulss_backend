@@ -42,7 +42,7 @@ public class GoodESService {
     public void deleteGoodForSale(GoodForSale goodForSale){
         goodForSaleRepository.deleteById(goodForSale.getId());
     }
-    public void deleteGoodForSaleById(int id){
+    public void deleteGoodForSaleById(Integer id){
         goodForSaleRepository.deleteById(id);
     }
 

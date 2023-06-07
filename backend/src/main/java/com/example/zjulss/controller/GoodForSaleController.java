@@ -121,6 +121,57 @@ public class GoodForSaleController {
         return goodForSaleService.updateGoodCount(Integer.parseInt(id), Integer.parseInt(count));
     }
 
+    @PostMapping("/updateSort")
+    @ResponseBody
+    public boolean updateSort(@RequestBody Map<String, String> map, HttpServletResponse httpServletResponse) throws IOException {
+        String id = map.get("id");
+        String sort = map.get("newSort");
+        if (!MyStringUtils.checkIsValid(id, sort)) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
+            return false;
+        }
+        return goodForSaleService.updateGoodSort(Integer.parseInt(id), Integer.parseInt(sort));
+    }
+
+
+    @PostMapping("/updateRemark")
+    @ResponseBody
+    public boolean updateRemark(@RequestBody Map<String, String> map, HttpServletResponse httpServletResponse) throws IOException {
+        String id = map.get("id");
+        String remark = map.get("newRemark");
+        if (!MyStringUtils.checkIsValid(id, remark)) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
+            return false;
+        }
+        return goodForSaleService.updateGoodRemark(Integer.parseInt(id), remark);
+    }
+
+
+    @PostMapping("/updateTransaction")
+    @ResponseBody
+    public boolean updateTransaction(@RequestBody Map<String, String> map, HttpServletResponse httpServletResponse) throws IOException {
+        String id = map.get("id");
+        String transaction = map.get("newTransaction");
+        if (!MyStringUtils.checkIsValid(id, transaction)) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
+            return false;
+        }
+        return goodForSaleService.updateGoodTransaction(Integer.parseInt(id), Integer.parseInt(transaction));
+    }
+
+
+    @PostMapping("/updateImage")
+    @ResponseBody
+    public boolean updateImage(@RequestBody Map<String, String> map, HttpServletResponse httpServletResponse) throws IOException {
+        String id = map.get("id");
+        String image = map.get("newImage");
+        if (!MyStringUtils.checkIsValid(id, image)) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "illegal argument");
+            return false;
+        }
+        return goodForSaleService.updateGoodImage(Integer.parseInt(id), image);
+    }
+
     @GetMapping("/feed")
     @ResponseBody
     public List<GoodForSale> getRecommendGood(){
@@ -166,5 +217,13 @@ public class GoodForSaleController {
         }
         return  BaseResponse.fail("留言失败");
     }
+
+    @GetMapping("/importES")
+    @ResponseBody
+    public boolean insertAllGoodToES(){
+        goodForSaleService.insertAllToESSErvice();
+        return true;
+    }
+
 
 }
