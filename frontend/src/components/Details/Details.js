@@ -9,25 +9,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: '#F5F5F5',
         padding: theme.spacing(2)
-    },
-    title: {
-        fontWeight: 'bold',
-        marginBottom: theme.spacing(2)
-    },
-    avatar: {
-        width: theme.spacing(20),
-        height: theme.spacing(20),
-        margin: 'auto'
-    },
-    info: {
-        border: '1px solid #ccc',
-        padding: theme.spacing(2),
-        borderRadius: theme.spacing(1)
-    },
-    name: {
-        fontWeight: 'bold',
-        backgroundColor: '#F5F5F5',
-        margin: 60
     }
 }))
 
@@ -35,6 +16,7 @@ function Details () {
     const classes = useStyles()
     const [goodInfo, setGoodInfo] = useState([])
     const [adding, setAdding] = useState(false);
+    const [details, setDetails] = useState(false);
     const fetchData = async () => {
         const info = await agent.Good.getGoodDetail(3);
         console.log(info.msg)
@@ -88,6 +70,31 @@ function Details () {
         }
     }
 
+    async function addComments() {
+        if (navigator.onLine) {
+            var contents = document.getElementById("content_area").value;
+            alert(contents)
+            Promise.all([
+                agent.Good.addComment(goodInfo.id, contents)
+            ]).then(results => {
+                const allSucceeded = results.every(result => result.result === 1);
+                if (allSucceeded) {
+                    alert("评论成功！");
+                } else {
+                    alert("评论失败");
+                }
+            }).catch(error => {
+                alert("评论失败");
+            });
+        } else {
+            alert("网络连接异常，请检查网络设置！");
+        }
+    }
+
+    async function showDetails() {
+        setDetails(true);
+    }
+
     return (
         <Box className={classes.root} >
             <Grid container spacing={3} >
@@ -106,17 +113,114 @@ function Details () {
                             />
                         </span>
                         <span className="goods-desc">
-                            <div>商品成色：{goodInfo.level}成新</div>
-                            <div>商品描述：{goodInfo.remark}</div>
-                            {/*<div>商品类别：{sortENUM[goodInfo.sort]}</div>*/}
-                            <div>交易方式：{transENUM[goodInfo.transaction]}</div>
-                            <div>商品数量：{goodInfo.count}</div>
-                            <div>商品销量：{goodInfo.sales}</div>
-                            <div>商品价格：{goodInfo.price.toFixed(2)}元</div>
-                            {/*<div>信息更新时间：{goodInfo.modify}</div>*/}
-                            <button className="button" onClick={addGoods}>
-                                        加入购物车
-                            </button>
+                            <div>
+                                {details ?
+                                <></>
+                                    :
+                                    <button className="button" onClick={showDetails}>
+                                        显示详情
+                                    </button>
+                                }
+                            </div>
+                            <div>
+                                {details ?
+                                    <>
+                                        <span className="goods-desc">
+                                            <div className="goods-desc-box">
+                                                <span className="goods-desc-name">
+                                                    商品成色：
+                                                </span>
+                                                <span className="goods-desc-data">
+                                                    {goodInfo.level}成新
+                                                </span>
+                                            </div>
+                                            <div className="goods-desc-box">
+                                                <span className="goods-desc-name">
+                                                    商品描述：
+                                                </span>
+                                                <span className="goods-desc-data">
+                                                    {goodInfo.remark}
+                                                </span>
+                                            </div>
+                                            <div className="goods-desc-box">
+                                                <span className="goods-desc-name">
+                                                    商品类别：
+                                                </span>
+                                                <span className="goods-desc-data">
+                                                    {sortENUM[goodInfo.sort]}
+                                                </span>
+                                            </div>
+                                            <div className="goods-desc-box">
+                                                <span className="goods-desc-name">
+                                                    交易方式：
+                                                </span>
+                                                <span className="goods-desc-data">
+                                                    {transENUM[goodInfo.transaction]}
+                                                </span>
+                                            </div>
+                                            <div className="goods-desc-box">
+                                                <span className="goods-desc-name">
+                                                    商品数量：
+                                                </span>
+                                                <span className="goods-desc-data">
+                                                    {goodInfo.count}
+                                                </span>
+                                            </div>
+                                            <div className="goods-desc-box">
+                                                <span className="goods-desc-name">
+                                                    商品销量：
+                                                </span>
+                                                <span className="goods-desc-data">
+                                                    {goodInfo.sales}
+                                                </span>
+                                            </div>
+                                            <div className="goods-desc-box">
+                                                <span className="goods-desc-name">
+                                                    商品状态：
+                                                </span>
+                                                <span className="goods-desc-data">
+                                                    {displayENUM[goodInfo.display]}
+                                                </span>
+                                            </div>
+                                            <div className="goods-desc-box">
+                                                <span className="goods-desc-name">
+                                                    商品价格：
+                                                </span>
+                                                <span className="goods-desc-data">
+                                                    {goodInfo.price.toFixed(2)}元
+                                                </span>
+                                            </div>
+                                            <div className="goods-desc-box">
+                                                <span className="goods-desc-name">
+                                                    信息更新时间：
+                                                </span>
+                                                <span className="goods-desc-data">
+                                                    {goodInfo.modify}
+                                                </span>
+                                            </div>
+                                            <button className="button" onClick={addGoods}>
+                                                        加入购物车
+                                            </button>
+                                                            {/*<div>卖家id：{goodInfo.uid}</div>*/}
+                                        </span>
+                                        {/*<div className="comment">*/}
+                                        {/*    <textarea*/}
+                                        {/*        id="content_area"*/}
+                                        {/*        cols="50"*/}
+                                        {/*        rows="8"*/}
+                                        {/*        placeholder="请输入评论内容"*/}
+                                        {/*    />*/}
+                                        {/*    <br />*/}
+                                        {/*    <button className="button" onClick={addComments}>*/}
+                                        {/*        发表评论*/}
+                                        {/*    </button>*/}
+                                        {/*</div>*/}
+                                    </>
+                                    :
+                                    <>
+                                    </>
+                                }
+                            </div>
                         </span>
                     </div>
                 </Grid>

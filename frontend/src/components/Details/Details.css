@@ -19,7 +19,7 @@
 .goods-desc {
     float: left;
     margin-left: 20px;
-    margin-top: 58px;
+    margin-top: 28px;
     font-size: 18px;
     font-weight: 600;
     line-height: 30px;
@@ -58,7 +58,8 @@
     background-color: #007aff; /* 按钮背景色 */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* 阴影效果，可以根据需要自行调整 */
     transition: background-color 0.3s ease; /* 渐变过渡效果 */
-    margin-top: 25px;
+    margin-top: 18px;
+    /*margin-bottom: 1px;*/
 }
 
 /* 鼠标悬停状态 */
@@ -70,6 +71,11 @@
 .button:active {
     background-color: #0053ba;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.comment {
+    margin-top: 50px;
+    margin-left: 650px;
 }
 
 
