@@ -7,7 +7,7 @@ const Home = () => {
     return (
         // <>test home</>
         <ul>
-            <li><Link to='/Details'>Details</Link></li>
+            <li><Link to='/Details?id=14289'>Details</Link></li>
         </ul>
     )
 }

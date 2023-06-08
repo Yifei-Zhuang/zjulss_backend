@@ -1,5 +1,6 @@
 import { Typography, Avatar, Grid, makeStyles, Box, Card, CardContent, CardMedia, Button, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
+import {useSearchParams} from 'react-router-dom'
 import agent from "../../agent"
 import './Details.css';
 import { forEach } from "react-bootstrap/ElementChildren"
@@ -17,11 +18,12 @@ function Details () {
     const [goodInfo, setGoodInfo] = useState([])
     const [adding, setAdding] = useState(false);
     const [details, setDetails] = useState(false);
+    const [params] = useSearchParams();
+    const qid = params.get('id');
     const fetchData = async () => {
-        const info = await agent.Good.getGoodDetail(3);
+        const info = await agent.Good.getGoodDetail(qid);
         console.log(info.msg)
         setGoodInfo(info)
-
         console.log(goodInfo)
     }
 
@@ -104,7 +106,9 @@ function Details () {
     }
 
     return (
+
         <Box className={classes.root} >
+
             <Grid container spacing={3} >
                 <Grid item xs={12} className={classes.textCenter} >
                     <div className="goods-box">
@@ -114,7 +118,7 @@ function Details () {
                                 component="img"
                                 height="350"
                                 image={goodInfo.image}
-                                style={{}}
+                                style={{objectFit: "contain"}}
                                 onError={(e) => {
                                     e.target.src = "https://api.dujin.org/bing/1366.php";
                                 }}
@@ -134,6 +138,7 @@ function Details () {
                                 {details ?
                                     <>
                                         <span className="goods-desc">
+
                                             <div className="goods-desc-box">
                                                 <span className="goods-desc-name">
                                                     商品成色：
@@ -150,6 +155,14 @@ function Details () {
                                                     {goodInfo.remark}
                                                 </span>
                                             </div>
+                                            {/*<div className="goods-desc-box">*/}
+                                            {/*    <span className="goods-desc-name">*/}
+                                            {/*        商品图片连接：*/}
+                                            {/*    </span>*/}
+                                            {/*    <span className="goods-desc-data">*/}
+                                            {/*        {goodInfo.image}*/}
+                                            {/*    </span>*/}
+                                            {/*</div>*/}
                                             <div className="goods-desc-box">
                                                 <span className="goods-desc-name">
                                                     商品类别：
