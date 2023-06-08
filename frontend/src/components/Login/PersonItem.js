@@ -24,8 +24,7 @@ import {
 
 const ItemInfo = ({ item }) => {
     return (
-        <Card>
-            <Box style={{ padding: 14,  borderRadius: 11 }} >
+            <Box style={{ padding: 14,  borderRadius: 11,border: 'none',background:'#f0f0f0' }} >
                 <CardMedia
                     component="img"
                     image={item.image}
@@ -44,7 +43,6 @@ const ItemInfo = ({ item }) => {
 
              
             </Box>
-        </Card>
       
     )
 }
@@ -94,10 +92,10 @@ const CartItems = ({ items, dic }) => {
             <Typography variant="h4" style={{textAlign:'center', color:'Highlight'}}>购物车</Typography>
             <hr />
             {items.length > 0 ? (
-                <Grid container spacing={7}>
+                <Grid container spacing={2}>
                     {items.map(item => (
                         <Grid item xs={12} key={item.id} >
-                            <Card style={{padding:16}}>
+                            <Card style={{ padding: 14,  borderRadius: 11,border: 'none',background:'#f0f0f0' }}>
                                 {dic[item.qid] != null ?
                                     <ItemInfo item={dic[item.qid]} />
                                     :
