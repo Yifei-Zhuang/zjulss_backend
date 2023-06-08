@@ -90,12 +90,21 @@ const Profile ={
 
 const Good={
     getGoodDetail: id =>
-        requests.get(`/good/detail/${id}`)
+        requests.get(`/good/detail/${id}`),
+
+	addComment: (qid, content)=>
+		requests.post('/good/comment', {qid:qid, content: content})
+}
+
+const Cart={
+	addToCart: (qid) =>
+		requests.post('/cart/add', {qid: qid})
 }
 
 
 export default {
     Auth,
     Profile,
-    Good
+    Good,
+	Cart
 };

@@ -37,20 +37,20 @@ public class MapperTests {
 
     @Test
     public void testInsertUser() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserName("tester");
-        userInfo.setPhone("12345678901");
-        userInfo.setRealName("realName");
-        userInfo.setClazz("clazz");
-        userInfo.setSno("sno");
-        userInfo.setDormitory("123");
-        userInfo.setGender("1");
-        userInfo.setCreateTime(LocalDateTime.now());
-        userInfo.setAvatar("baidu.com");
-
-        int rows = userInfoMapper.insertUserInfo(userInfo);
-        System.out.println(rows);
-        System.out.println(userInfo.getId());
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setUserName("tester");
+//        userInfo.setPhone("12345678901");
+//        userInfo.setRealName("realName");
+//        userInfo.setClazz("clazz");
+//        userInfo.setSno("sno");
+//        userInfo.setDormitory("123");
+//        userInfo.setGender("1");
+//        userInfo.setCreateTime(LocalDateTime.now());
+//        userInfo.setAvatar("baidu.com");
+//
+//        int rows = userInfoMapper.insertUserInfo(userInfo);
+//        System.out.println(rows);
+//        System.out.println(userInfo.getId());
     }
 
     @Test

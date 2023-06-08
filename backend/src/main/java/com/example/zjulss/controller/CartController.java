@@ -8,7 +8,7 @@ import com.example.zjulss.response.BaseResponse;
 import com.example.zjulss.service.CartService;
 import com.example.zjulss.service.GoodForSaleService;
 import com.example.zjulss.utils.HostHolder;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

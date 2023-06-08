@@ -3,8 +3,9 @@ package com.example.zjulss.interceptor;
 
 import com.example.zjulss.annotation.LoginRequired;
 import com.example.zjulss.utils.HostHolder;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

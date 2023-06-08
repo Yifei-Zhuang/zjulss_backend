@@ -1,17 +1,16 @@
 package com.example.zjulss.vo;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 @Data
 public class User {
     int code;
-    @NotBlank
+//    @NotBlank
     String password;
-    @NotBlank
+//    @NotBlank
     String userName;
-    @NotBlank
+//    @NotBlank
     String phoneNumber;
     String realName;
     String clazz;

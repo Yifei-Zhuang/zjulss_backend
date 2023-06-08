@@ -5,8 +5,9 @@ import com.example.zjulss.entity.UserInfo;
 import com.example.zjulss.service.UserInfoService;
 import com.example.zjulss.utils.HostHolder;
 import com.example.zjulss.utils.JwtUtil;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;

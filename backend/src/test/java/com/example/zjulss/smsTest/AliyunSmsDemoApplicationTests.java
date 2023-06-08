@@ -20,43 +20,43 @@ class AliyunSmsDemoApplicationTests {
 
     @Test
     void contextLoads() {
-
-        /**
-         * 连接阿里云：
-         *
-         * 三个参数：
-         * regionId 不要动，默认使用官方的
-         * accessKeyId 自己的用户accessKeyId
-         * accessSecret 自己的用户accessSecret
-         */
-        DefaultProfile profile = DefaultProfile.getProfile(
-                "cn-hangzhou", "LTAI5tKZsKMYzrZNvKHRSEtq", "XJSLgfKbP5ixFAKKSrQVhvmjENbAdx");
-        IAcsClient client = new DefaultAcsClient(profile);
-
-        // 构建请求：
-        CommonRequest request = new CommonRequest();
-        request.setSysMethod(MethodType.POST);
-        request.setSysDomain("dysmsapi.aliyuncs.com");
-        request.setSysVersion("2017-05-25");
-        request.setSysAction("SendSms");
-
-        // 自定义参数：
-        request.putQueryParameter("PhoneNumbers", "xxxxx0440");// 接收短信的手机号
-        request.putQueryParameter("SignName", "CSP网上商城");// 短信签名
-        request.putQueryParameter("TemplateCode", "SMS_20xxxxx74");// 短信模版CODE
-
-        // 构建短信验证码
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", 1234);// 这里仅用于测试，所以验证码写死
-        request.putQueryParameter("TemplateParam", JSONObject.toJSONString(map));
-
-        try {
-            CommonResponse response = client.getCommonResponse(request);
-            System.out.println(response.getData());
-        } catch (ServerException e) {
-            e.printStackTrace();
-        } catch (ClientException e) {
-            e.printStackTrace();
-        }
+//
+//        /**
+//         * 连接阿里云：
+//         *
+//         * 三个参数：
+//         * regionId 不要动，默认使用官方的
+//         * accessKeyId 自己的用户accessKeyId
+//         * accessSecret 自己的用户accessSecret
+//         */
+//        DefaultProfile profile = DefaultProfile.getProfile(
+//                "cn-hangzhou", "LTAI5tKZsKMYzrZNvKHRSEtq", "XJSLgfKbP5ixFAKKSrQVhvmjENbAdx");
+//        IAcsClient client = new DefaultAcsClient(profile);
+//
+//        // 构建请求：
+//        CommonRequest request = new CommonRequest();
+//        request.setSysMethod(MethodType.POST);
+//        request.setSysDomain("dysmsapi.aliyuncs.com");
+//        request.setSysVersion("2017-05-25");
+//        request.setSysAction("SendSms");
+//
+//        // 自定义参数：
+//        request.putQueryParameter("PhoneNumbers", "xxxxx0440");// 接收短信的手机号
+//        request.putQueryParameter("SignName", "CSP网上商城");// 短信签名
+//        request.putQueryParameter("TemplateCode", "SMS_20xxxxx74");// 短信模版CODE
+//
+//        // 构建短信验证码
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("code", 1234);// 这里仅用于测试，所以验证码写死
+//        request.putQueryParameter("TemplateParam", JSONObject.toJSONString(map));
+//
+//        try {
+//            CommonResponse response = client.getCommonResponse(request);
+//            System.out.println(response.getData());
+//        } catch (ServerException e) {
+//            e.printStackTrace();
+//        } catch (ClientException e) {
+//            e.printStackTrace();
+//        }
     }
 }

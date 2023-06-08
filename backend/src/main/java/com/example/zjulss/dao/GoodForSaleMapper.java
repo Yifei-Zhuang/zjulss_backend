@@ -21,6 +21,12 @@ public interface GoodForSaleMapper {
     })
     List<GoodForSale> getUserSells(int uid);
 
+
+    @Select({
+            "select * from good where uid = #{uid} limit #{offset},#{limit}"
+    })
+    List<GoodForSale> getUserSellsByOffsetAndLimit(int uid, int offset, int limit);
+
     //update
     @Select({
             "select * from good where id = #{id} and display = 1"
@@ -67,4 +73,29 @@ public interface GoodForSaleMapper {
             "update good set count = #{count} where id = #{id} and display = 1"
     })
     int updateCount(int count, int id);
+
+    @Update({
+            "update good set sort = #{sort} where id = #{id} and display = 1"
+    })
+    int updateSort(int sort, int id);
+
+    @Update({
+            "update good set remark = #{remark} where id = #{id} and display = 1"
+    })
+    int updateRemark(String remark, int id);
+
+    @Update({
+            "update good set transaction = #{transaction} where id = #{id} and display = 1"
+    })
+    int updateTransaction(int transaction, int id);
+
+    @Update({
+            "update good set image = #{image} where id = #{id} and display = 1"
+    })
+    int updateImage(String image, int id);
+
+    @Select({
+            "select * from good where display = 1"
+    })
+    List<GoodForSale> getAllGoods();
 }

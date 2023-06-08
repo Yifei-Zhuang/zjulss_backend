@@ -12,8 +12,7 @@ import com.example.zjulss.utils.HostHolder;
 import com.example.zjulss.utils.JwtUtil;
 import com.example.zjulss.utils.MyStringUtils;
 import com.example.zjulss.vo.User;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -43,7 +42,7 @@ public class UserController {
     // 注册
     @PostMapping("/register")
     @ResponseBody
-    public BaseResponse registerUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+    public BaseResponse registerUser( @RequestBody User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             return BaseResponse.fail("参数校验失败");

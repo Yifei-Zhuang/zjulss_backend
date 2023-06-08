@@ -8,6 +8,7 @@ import LoginPage from "./components/Login/LoginPage";
 import Register from "./components/Register/Register";
 import agent from "./agent";
 import ChangePassword from "./components/Register/ChangePassword";
+import Details from "./components/Details/Details";
 
 //withAuth的组件实例化
 const AuthProfile = withAuth(Profile)
@@ -43,6 +44,7 @@ function App() {
             <Route exact path="/Home"  element={<Home/>} />
 			<Route path="/Login" element={<LoginPage/>} />
 			<Route path="/Register" element={<Register/>} />
+			<Route path="/Details" element={<Details/>} />
 			{/* 需要身份验证的部分 */}
 			<Route path="/Profile"  element={<AuthProfile />} />
             <Route path="/PersonItem"  element={<AuthPersonItem/>} />

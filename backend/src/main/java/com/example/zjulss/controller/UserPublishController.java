@@ -6,8 +6,7 @@ import com.example.zjulss.response.BaseResponse;
 import com.example.zjulss.service.UserPublishGoodService;
 import com.example.zjulss.utils.HostHolder;
 import com.example.zjulss.vo.UserPublishGoodVO;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -32,7 +31,7 @@ public class UserPublishController {
 
     @ResponseBody
     @PostMapping("/add")
-    public BaseResponse addUserPublish(@Valid @RequestBody UserPublishGoodVO userPublishGoodVO, HttpServletResponse httpServletResponse) throws IOException {
+    public BaseResponse addUserPublish(@RequestBody UserPublishGoodVO userPublishGoodVO, HttpServletResponse httpServletResponse) throws IOException {
         UserInfo user = hostHolder.getUser();
         if (user == null) {
             httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value(), "please login");
