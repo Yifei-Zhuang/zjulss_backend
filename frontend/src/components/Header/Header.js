@@ -106,6 +106,8 @@ function Header() {
                     >
                         <MenuItem component={Link} to='/Profile'>个人信息</MenuItem>
                         <MenuItem component={Link} to='/PersonItem'>个人交易</MenuItem>
+                        <MenuItem component={Link} to='/ReleaseWanted'>发布求购</MenuItem>
+                        <MenuItem component={Link} to='/ReleaseSale'>发布出售</MenuItem>
                         <MenuItem component={Link} to='/Login'>登录</MenuItem>
                         <MenuItem component={Link} to='/Register'>注册</MenuItem>
                         <MenuItem component={Link} onClick={handleLogout} to='/Login'>登出</MenuItem>

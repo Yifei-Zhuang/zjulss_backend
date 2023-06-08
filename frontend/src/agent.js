@@ -98,10 +98,47 @@ const Good={
 	addComment: (qid, content)=>
 		requests.post('/good/comment', {qid:qid, content: content})
 }
-
 const Cart={
 	addToCart: (qid) =>
 		requests.post('/cart/add', {qid: qid})
+}
+
+const GoodWanted = {
+    addGoodWanted: (name, price, sort, count, remark, transaction, image) =>
+        requests.post('/goodwanted/add', { name: name, price: price, sort: sort, count: count, remark: remark, transaction: transaction, image: image }),
+    updateName: (id, name) =>
+        requests.post('/goodwanted/updateName', { id: id, newName: name }),
+    updatePrice: (id, price) =>
+        requests.post('/goodwanted/updatePrice', { id: id, newPrice: price }),
+    updateSort: (id, sort) =>
+        requests.post('/goodwanted/updateSort', { id: id, newSort: sort }),
+    updateCount: (id, count) =>
+        requests.post('/goodwanted/updateCount', { id: id, newCount: count }),
+    updateRemark: (id, remark) =>
+        requests.post('/goodwanted/updateRemark', { id: id, newRemark: remark }),
+    updateTransaction: (id, transaction) =>
+        requests.post('/goodwanted/updateTransaction', { id: id, newTransaction: transaction }),
+    updateImage: (id, image) =>
+        requests.post('/goodwanted/updateImage', { id: id, newImage: image })
+}
+
+const GoodSale = {
+    addGoodSale: (name, level, remark, price , sort, count,transaction, sales, image) =>
+        requests.post('/good/add', { name: name, level:level, remark: remark, price:price, sort: sort, count: count, transaction: transaction,sales:sales, image: image }),
+    updateName: (id, name) =>
+        requests.post('/good/updateName', { id: id, newName: name }),
+    updatePrice: (id, price) =>
+        requests.post('/good/updatePrice', { id: id, newPrice: price }),
+    updateSort: (id, sort) =>
+        requests.post('/good/updateSort', { id: id, newSort: sort }),
+    updateCount: (id, count) =>
+        requests.post('/good/updateCount', { id: id, newCount: count }),
+    updateRemark: (id, remark) =>
+        requests.post('/good/updateRemark', { id: id, newRemark: remark }),
+    updateTransaction: (id, transaction) =>
+        requests.post('/good/updateTransaction', { id: id, newTransaction: transaction }),
+    updateImage: (id, image) =>
+        requests.post('/good/updateImage', { id: id, newImage: image })
 }
 
 
@@ -109,5 +146,7 @@ export default {
     Auth,
     Profile,
     Good,
-	Cart
+    GoodWanted,
+    GoodSale,
+    Cart
 };
