@@ -21,6 +21,12 @@ public interface GoodForSaleMapper {
     })
     List<GoodForSale> getUserSells(int uid);
 
+
+    @Select({
+            "select * from good where uid = #{uid} limit #{offset},#{limit}"
+    })
+    List<GoodForSale> getUserSellsByOffsetAndLimit(int uid, int offset, int limit);
+
     //update
     @Select({
             "select * from good where id = #{id} and display = 1"

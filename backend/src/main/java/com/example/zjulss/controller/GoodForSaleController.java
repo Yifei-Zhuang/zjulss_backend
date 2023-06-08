@@ -39,13 +39,13 @@ public class GoodForSaleController {
     @GetMapping("/list")
     @ResponseBody
     @LoginRequired
-    public List<GoodForSale> getUserSells(HttpServletResponse httpServletResponse) throws IOException {
+    public List<GoodForSale> getUserSells(@RequestParam(value = "offset",required = false,defaultValue = "0") int offset,@RequestParam(value = "limit",required = false,defaultValue = "10") int limit,HttpServletResponse httpServletResponse) throws IOException {
         UserInfo userInfo = hostHolder.getUser();
         if(userInfo == null){
             httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,"need login first");
             return null;
         }
-        return goodForSaleService.getUserSells(userInfo.getId());
+        return goodForSaleService.getUserSells(userInfo.getId(),offset,limit);
     }
 
     @PostMapping("/add")

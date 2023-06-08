@@ -24,6 +24,9 @@ public class GoodForSaleService {
     public List<GoodForSale> getUserSells(int uid){
         return goodForSaleMapper.getUserSells(uid);
     }
+    public List<GoodForSale> getUserSells(int uid,int offset,int limit){
+        return goodForSaleMapper.getUserSellsByOffsetAndLimit(uid,offset,limit);
+    }
 
     public boolean insertGood(GoodForSale goodForSale) {
         if(goodForSaleMapper.insertGood(goodForSale) > 0){
