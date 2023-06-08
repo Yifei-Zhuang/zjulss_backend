@@ -58,7 +58,7 @@ const Auth = {
         requests
 			.post('/user/register', { code:code,password:password,userName:userName,phoneNumber:phoneNumber }),
     sendMessage: (phoneNumber) =>
-        requests.get('/code/send,${phoneNumber}'),
+        requests.get(`/code/send,${phoneNumber}`),
     changePassword: (code, newPassword)=>
         requests.post('/user/changePassword',{code:code,newPassword:newPassword}),
 
@@ -71,6 +71,9 @@ const Profile ={
         requests.get('/goodwanted/get'),
     getSell :() =>
         requests.get('/good/list'),
+
+    getPartSell:(num,off)=>
+        requests.get(`/good/list?limit=${num}&offset=${off}`),
     getCart:() =>
         requests.get('/cart/detail'),
 

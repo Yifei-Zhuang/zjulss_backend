@@ -1,7 +1,7 @@
-import {Typography, Avatar, Grid, makeStyles, Box, Card, CardContent, Button, TextField} from '@material-ui/core';
-import React, {useEffect, useState} from 'react'
+import { Typography, Avatar, Grid, makeStyles, Box, Card, CardContent, Button, TextField } from '@material-ui/core';
+import React, { useEffect, useState } from 'react'
 import agent from "../../agent";
-import {forEach} from "react-bootstrap/ElementChildren";
+import { forEach } from "react-bootstrap/ElementChildren";
 
 
 function getUserData(s) {
@@ -35,11 +35,12 @@ function getUserData(s) {
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: '#F5F5F5',
-        padding: theme.spacing(2)
+        padding: theme.spacing(12)
     },
     title: {
         fontWeight: 'bold',
-        marginBottom: theme.spacing(2)
+        textAlign: 'center',
+        padding: theme.spacing(2)
     },
     avatar: {
         width: theme.spacing(20),
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     info: {
         border: '1px solid #ccc',
         padding: theme.spacing(2),
+        margin: theme.spacing(2),
         borderRadius: theme.spacing(1)
     }
 }));
@@ -64,7 +66,7 @@ function Profile() {
 
         ]);
         console.log(info.msg)
-        if (info.msg != '1'){
+        if (info.msg != '1') {
 
         }
         setUserInfo(getUserData(info.msg))
@@ -111,35 +113,35 @@ function Profile() {
     return (
         <Box className={classes.root}>
             <Grid container spacing={3}>
-                <Grid item xs={12} className={classes.textCenter}>
+                <Grid item xs={12} style={{textAlign:'center', spacing: 26, display: 'block' }} >
                     {editing ?
                         <>
                             <TextField label="头像" value={userInfo.avatar}
-                                       onChange={(event) => handleUserInfoChange(event, "avatar")}/>
+                                onChange={(event) => handleUserInfoChange(event, "avatar")} />
                             <TextField label="学号" value={userInfo.realName}
-                                       onChange={(event) => handleUserInfoChange(event, "realName")}/>
+                                onChange={(event) => handleUserInfoChange(event, "realName")} />
                         </>
                         :
                         <>
-                            <Avatar alt={userInfo.realName} src={userInfo.avatar} className={classes.avatar}/>
+                            <Avatar alt={userInfo.realName} src={userInfo.avatar} className={classes.avatar} />
                             <Typography variant="h4" className={classes.title}>
                                 {userInfo.realName}
                             </Typography>
                         </>
                     }
                 </Grid>
-                <Grid item xs={12} className={classes.textCenter}>
-                    <Card>
-                        <CardContent>
+                <Grid item xs={12} >
+                    <Card className={classes.info}>
+               
                             <Typography variant="h6">个人信息</Typography>
                             {editing ?
                                 <>
                                     <TextField label="班级" value={userInfo.clazz}
-                                               onChange={(event) => handleUserInfoChange(event, "clazz")}/>
+                                        onChange={(event) => handleUserInfoChange(event, "clazz")} />
                                     <TextField label="学号" value={userInfo.sno}
-                                               onChange={(event) => handleUserInfoChange(event, "sno")}/>
+                                        onChange={(event) => handleUserInfoChange(event, "sno")} />
                                     <TextField label="性别" value={userInfo.gender}
-                                               onChange={(event) => handleUserInfoChange(event, "gender")}/>
+                                        onChange={(event) => handleUserInfoChange(event, "gender")} />
                                 </>
                                 :
                                 <>
@@ -148,19 +150,19 @@ function Profile() {
                                     <Typography variant="subtitle1">性别：{userInfo.gender}</Typography>
                                 </>
                             }
-                        </CardContent>
+            
                     </Card>
-                    <Card>
-                        <CardContent>
+                    <Card className={classes.info}>
+        
                             <Typography variant="h6">联系方式</Typography>
                             {editing ?
                                 <>
                                     <TextField label="用户名" value={userInfo.userName}
-                                               onChange={(event) => handleUserInfoChange(event, "userName")}/>
+                                        onChange={(event) => handleUserInfoChange(event, "userName")} />
                                     <TextField label="电话" value={userInfo.phone}
-                                               onChange={(event) => handleUserInfoChange(event, "phone")}/>
+                                        onChange={(event) => handleUserInfoChange(event, "phone")} />
                                     <TextField label="宿舍" value={userInfo.dormitory}
-                                               onChange={(event) => handleUserInfoChange(event, "dormitory")}/>
+                                        onChange={(event) => handleUserInfoChange(event, "dormitory")} />
                                 </>
                                 :
                                 <>
@@ -169,18 +171,16 @@ function Profile() {
                                     <Typography variant="body1">宿舍：{userInfo.dormitory}</Typography>
                                 </>
                             }
-                        </CardContent>
+              
                     </Card>
-                    <Box mt={2}>
-                        <Card>
-                            <CardContent>
-                                {editing ?
-                                    <Button variant="contained" color="primary" onClick={handleSave}>保存</Button>
-                                    :
-                                    <Button variant="contained" onClick={() => setEditing(true)}>编辑个人数据</Button>
-                                }
-                            </CardContent>
-                        </Card>
+                    <Box mt={2} style={{ padding: '10px', margin: '10px', alignContent: 'center' }} >
+
+                        {editing ?
+                            <Button variant="contained" color="primary" onClick={handleSave}>保存</Button>
+                            :
+                            <Button variant="contained" onClick={() => setEditing(true)}>编辑个人数据</Button>
+                        }
+
 
                     </Box>
                 </Grid>
