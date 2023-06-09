@@ -52,19 +52,19 @@ public class GoodESService {
     }
     public List<GoodForSale> searchGoodForSale(String keyWord,int pageNum,boolean isSortByPrice,boolean isSortBySort,int sort){
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder()
-                .withQuery(QueryBuilders.multiMatchQuery(keyWord, "name", "remark"))
+                .withQuery(QueryBuilders.multiMatchQuery(keyWord, "name"))
                 .withSort(SortBuilders.fieldSort("id").order(SortOrder.ASC))
-                .withPageable(PageRequest.of(pageNum * 10, (pageNum + 1 ) * 10))
+                .withPageable(PageRequest.of(pageNum ,10))
                 .withHighlightFields(
-                        new HighlightBuilder.Field("name").preTags("<em>").postTags("</em>"),
-                        new HighlightBuilder.Field("remark").preTags("<em>").postTags("</em>")
+                        new HighlightBuilder.Field("name").preTags("<em>").postTags("</em>")
                 );
         if(isSortByPrice){
             nativeSearchQueryBuilder.withSort(SortBuilders.fieldSort("price").order(SortOrder.ASC));
         }
         if(isSortBySort) {
-            nativeSearchQueryBuilder.withQuery(new RangeQueryBuilder("sort").from(sort).to(sort));
+            nativeSearchQueryBuilder.withFilter(new RangeQueryBuilder("sort").from(sort).to(sort));
         }
+//        System.out.println(nativeSearchQueryBuilder.build().getQuery().toString());
         return searchHelper(nativeSearchQueryBuilder.build());
     }
     private List<GoodForSale> searchHelper(SearchQuery searchQuery){
@@ -107,6 +107,9 @@ public class GoodESService {
                     String uid = hit.getSourceAsMap().get("uid").toString();
                     good.setUid(Integer.valueOf(uid));
 
+                    String price = hit.getSourceAsMap().get("price").toString();
+                    good.setPrice(Double.valueOf(price));
+
 
 
                     // 处理高亮显示的结果
@@ -129,9 +132,10 @@ public class GoodESService {
         });
 
         List<GoodForSale> list = new ArrayList<>();
-
-        for (GoodForSale good : page) {
-            list.add(good);
+        if(page != null) {
+            for (GoodForSale good : page) {
+                list.add(good);
+            }
         }
         return list;
     }
