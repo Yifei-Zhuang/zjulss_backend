@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
     @Select({
-            "select * from orders where seller_id = #{uid} or buyer_id = #{uid}"
+            "select * from orders where seller = #{uid} or buyer = #{uid}"
     })
     public List<Order> getOrderOfUser(int uid);
 

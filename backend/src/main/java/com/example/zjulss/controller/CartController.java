@@ -3,10 +3,12 @@ package com.example.zjulss.controller;
 import com.example.zjulss.annotation.LoginRequired;
 import com.example.zjulss.entity.Cart;
 import com.example.zjulss.entity.GoodForSale;
+import com.example.zjulss.entity.Order;
 import com.example.zjulss.entity.UserInfo;
 import com.example.zjulss.response.BaseResponse;
 import com.example.zjulss.service.CartService;
 import com.example.zjulss.service.GoodForSaleService;
+import com.example.zjulss.service.OrderService;
 import com.example.zjulss.utils.HostHolder;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class CartController {
 
     @Autowired
     HostHolder hostHolder;
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("/detail")
     @ResponseBody
@@ -95,6 +100,37 @@ public class CartController {
             httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "invalid post body");
             return BaseResponse.fail();
         }
+        return BaseResponse.success();
+    }
+
+    @GetMapping("/submit")
+    @LoginRequired
+    @ResponseBody
+    public BaseResponse submitOrder(@RequestParam(value = "id",required = true) int cartid, HttpServletResponse httpServletResponse) throws IOException {
+        Cart cart = cartService.getCart(cartid);
+        if(cart == null) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "invalid cart id");
+            return BaseResponse.fail();
+        }
+        GoodForSale good = goodForSaleService.getGoodInfo(cart.getQid());
+        System.out.println(cart);
+        System.out.println(good);
+        if(cart.getQuantity() > good.getCount()) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "quantity exceed stock");
+            return BaseResponse.fail();
+        }
+        UserInfo userInfo = hostHolder.getUser();
+        Order order = new Order();
+        order.setSeller(good.getUid());
+        order.setBuyer(userInfo.getId());
+        order.setQid(cart.getQid());
+        order.setQuantity(cart.getQuantity());
+        order.setCreateTime(LocalDateTime.now());
+        if(!orderService.addOrder(order)) {
+            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "submit order fail");
+            return BaseResponse.fail();
+        }
+        cartService.removeRecord(cartid);
         return BaseResponse.success();
     }
 }
