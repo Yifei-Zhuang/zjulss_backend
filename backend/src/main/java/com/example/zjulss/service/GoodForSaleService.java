@@ -1,12 +1,13 @@
 package com.example.zjulss.service;
 
-import com.example.zjulss.dao.GoodForSaleMapper;
-import com.example.zjulss.entity.GoodForSale;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.zjulss.dao.GoodForSaleMapper;
+import com.example.zjulss.entity.GoodForSale;
 
 @Service
 public class GoodForSaleService {
@@ -16,20 +17,20 @@ public class GoodForSaleService {
     @Autowired
     GoodESService goodESService;
 
-
     public GoodForSale getGoodInfo(int qid) {
         return goodForSaleMapper.getGood(qid);
     }
 
-    public List<GoodForSale> getUserSells(int uid){
+    public List<GoodForSale> getUserSells(int uid) {
         return goodForSaleMapper.getUserSells(uid);
     }
-    public List<GoodForSale> getUserSells(int uid,int offset,int limit){
-        return goodForSaleMapper.getUserSellsByOffsetAndLimit(uid,offset,limit);
+
+    public List<GoodForSale> getUserSells(int uid, int offset, int limit) {
+        return goodForSaleMapper.getUserSellsByOffsetAndLimit(uid, offset, limit);
     }
 
     public boolean insertGood(GoodForSale goodForSale) {
-        if(goodForSaleMapper.insertGood(goodForSale) > 0){
+        if (goodForSaleMapper.insertGood(goodForSale) > 0) {
             goodESService.insertGoodForSale(goodForSale);
             return true;
         }
@@ -90,26 +91,27 @@ public class GoodForSaleService {
         return goodForSaleMapper.updateImage(image, id) == 1;
     }
 
-    public List<GoodForSale> getGoodFeed(){
+    public List<GoodForSale> getGoodFeed() {
         return new ArrayList<>(goodForSaleMapper.getTenLatestGoods());
     }
 
-    public List<GoodForSale> getGoodsByOffsetAndLimit(int offset,int limit){
-        return new ArrayList<>(goodForSaleMapper.getGoodsByOffsetAndLimit(offset,limit));
+    public List<GoodForSale> getGoodsByOffsetAndLimit(int offset, int limit) {
+        return new ArrayList<>(goodForSaleMapper.getGoodsByOffsetAndLimit(offset, limit));
     }
 
-    public List<GoodForSale> getGoodsBySort(int sort){
+    public List<GoodForSale> getGoodsBySort(int sort) {
         return new ArrayList<>(goodForSaleMapper.getGoodsBySort(sort));
     }
+
     @Deprecated
-    public void insertAllToESSErvice(){
+    public void insertAllToESSErvice() {
         List<GoodForSale> goods = goodForSaleMapper.getAllGoods();
-        for(int i = 56172;i < goods.size();i++){
+        for (int i = 56172; i < goods.size(); i++) {
             System.out.println(i);
             goodESService.insertGoodForSale(goods.get(i));
         }
-//        for(GoodForSale good:goods){
-//            goodESService.insertGoodForSale(good);
-//        }
+        // for(GoodForSale good:goods){
+        // goodESService.insertGoodForSale(good);
+        // }
     }
 }

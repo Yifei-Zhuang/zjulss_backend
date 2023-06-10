@@ -23,32 +23,32 @@ public class UserInfoInterceptor implements HandlerInterceptor {
     @Autowired
     private HostHolder hostHolder;
 
-    // @Override
-    // public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    //     // 从header中获取凭证
-    //     String token = request.getHeader("Authorization");
-    //     System.out.println(token);
-    //     if (token != null) {
-    //         // 查询凭证
-    //         try {
-    //             int userId = JwtUtil.validateJWT(token);
-    //             // 检查凭证是否有效
-    //             // 根据凭证查询用户
-    //             UserInfo userinfo = userInfoService.getUserInfoById(userId);
-    //             // 在本次请求中持有用户
-    //             hostHolder.setUser(userinfo);
-    //             System.out.println(userinfo); // test
-    //         } catch (Exception e) {
-    //             e.printStackTrace();
-    //             return true;
-    //         }
-    //     }
-    //     return true;
-    // }
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 从header中获取凭证
+        String token = request.getHeader("Authorization");
+        System.out.println(token);
+        if (token != null) {
+            // 查询凭证
+            try {
+                int userId = JwtUtil.validateJWT(token);
+                // 检查凭证是否有效
+                // 根据凭证查询用户
+                UserInfo userinfo = userInfoService.getUserInfoById(userId);
+                // 在本次请求中持有用户
+                hostHolder.setUser(userinfo);
+                System.out.println(userinfo); // test
+            } catch (Exception e) {
+                e.printStackTrace();
+                return true;
+            }
+        }
+        return true;
+    }
 
-    // @Override
-    // public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-    //                        @Nullable ModelAndView modelAndView) throws Exception {
-    //     hostHolder.clear();
-    // }
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                           @Nullable ModelAndView modelAndView) throws Exception {
+        hostHolder.clear();
+    }
 }

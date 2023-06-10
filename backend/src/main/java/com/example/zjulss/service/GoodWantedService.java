@@ -32,24 +32,9 @@ public class GoodWantedService {
         return goodWantedMapper.updateCount(count, id) == 1;
     }
 
-    public boolean updateWantedSort(int id, int sort) {
-        return goodWantedMapper.updateSort(sort, id) == 1;
-    }
-
-    public boolean updateWantedRemark(int id, String remark) {
-        return goodWantedMapper.updateRemark(remark, id) == 1;
-    }
-
-    public boolean updateWantedTransaction(int id, int transaction) {
-        return goodWantedMapper.updateTransaction(transaction, id) == 1;
-    }
-
-    public boolean updateWantedImage(int id, String image) {
-        return goodWantedMapper.updateImage(image, id) == 1;
-    }
-
     public boolean removeWanted(int id) {
         return goodWantedMapper.removeWanted(id) == 1;
     }
+
 
 }
