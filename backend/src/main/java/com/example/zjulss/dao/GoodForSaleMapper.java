@@ -43,9 +43,9 @@ public interface GoodForSaleMapper {
         List<GoodForSale> getGoodsByOffsetAndLimit(int offset, int limit);
 
         @Select({
-                        "select * from good where display = 1 and sort = #{sort} order by id desc"
+                        "select * from good where display = 1 and sort = #{sort} order by id desc limit #{offset},#{limit}"
         })
-        List<GoodForSale> getGoodsBySort(int sort);
+        List<GoodForSale> getGoodsBySort(int sort, int offset, int limit);
 
         @Update({
                         "update good set display = 0 where id = #{id} and display = 1"
@@ -94,4 +94,9 @@ public interface GoodForSaleMapper {
                         "select * from good where display = 1"
         })
         List<GoodForSale> getAllGoods();
+
+        @Select({
+                "select count(*) from good where sort = #{sort}"
+        })
+        int countBySort(int sort);
 }

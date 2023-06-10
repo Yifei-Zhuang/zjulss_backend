@@ -2,11 +2,13 @@ package com.example.zjulss.controller;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.zjulss.vo.GoodForSaleBySortVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -200,8 +202,8 @@ public class GoodForSaleController {
 
     @GetMapping("/getBySort")
     @ResponseBody
-    public List<GoodForSale> getAllGoodOfSort(@RequestParam(value = "sort", required = true) int sort) {
-        return goodForSaleService.getGoodsBySort(sort);
+    public GoodForSaleBySortVO getGoodOfSort(@RequestParam(value = "sort", required = true) int sort, @RequestParam(value = "page", required = true) int page) {
+        return new GoodForSaleBySortVO(goodForSaleService.getGoodsBySort(sort,page),goodForSaleService.getSortTotal(sort));
     }
 
     // ES 部分,仅有模糊搜索实现
@@ -238,6 +240,17 @@ public class GoodForSaleController {
             return BaseResponse.fail(e.toString());
         }
         return BaseResponse.fail("留言失败");
+    }
+
+    @GetMapping("/getComment")
+    @ResponseBody
+    public List<GoodMessage> addComment(@RequestParam(value = "qid",required = true) int qid, HttpServletResponse httpServletResponse)
+            throws IOException {
+        try {
+            return goodMessageService.getGoodMessageByQid(qid);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     @Deprecated

@@ -99,8 +99,8 @@ public class GoodForSaleService {
         return new ArrayList<>(goodForSaleMapper.getGoodsByOffsetAndLimit(offset, limit));
     }
 
-    public List<GoodForSale> getGoodsBySort(int sort) {
-        return new ArrayList<>(goodForSaleMapper.getGoodsBySort(sort));
+    public List<GoodForSale> getGoodsBySort(int sort,int page) {
+        return new ArrayList<>(goodForSaleMapper.getGoodsBySort(sort,page* 10,10));
     }
 
     @Deprecated
@@ -113,5 +113,8 @@ public class GoodForSaleService {
         // for(GoodForSale good:goods){
         // goodESService.insertGoodForSale(good);
         // }
+    }
+    public int getSortTotal(int sort){
+        return goodForSaleMapper.countBySort(sort);
     }
 }

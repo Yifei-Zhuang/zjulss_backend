@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class GoodMessageService {
@@ -16,5 +17,8 @@ public class GoodMessageService {
     public boolean insertGoodMessage(GoodMessage goodMessage) {
         goodMessage.setModify(LocalDateTime.now());
         return goodMessageMapper.insertGoodMessage(goodMessage) > 0;
+    }
+    public List<GoodMessage> getGoodMessageByQid(int qid){
+        return goodMessageMapper.getGoodMessageByQid(qid);
     }
 }
