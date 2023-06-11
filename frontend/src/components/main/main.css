@@ -1,0 +1,79 @@
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  margin-top: 40px;
+  border-bottom: 2px solid black;}
+.total-num {
+  float: left;
+  display: inline-block;
+}
+
+.sequence-menu {
+  float: right;
+  right: 0;
+  display: inline-block;
+}
+.pro-filter-bar {
+  float: middle;
+  height: 50px;
+  width :100%;
+}
+.search-wrap {
+  width: 100%;
+  float: middle;
+}
+  .filter-menu {
+    float: right;
+    margin-right: 20px;
+  }
+
+  .pro-filter-bar {
+    height: 50px;
+    float: middle;
+    width: 90%;
+  }
+    .filter-menu {
+      float: right;
+      width: 140px;
+      min-width: 0;
+      margin-right: 20px;
+    }
+
+  .segment {
+    height: 300px;
+    padding-top: 80px;
+    border: none;
+    box-shadow: none;
+  }
+
+.page-bar {
+  float: left;
+  margin-left: 20px;
+}
+
+.page-item {
+  padding: 0;
+}
+
+.page-item a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  line-height: 38px;
+  text-align: center;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.page-item a:hover {
+  color: black;
+}
+
+.selected .page-item a {
+  color: #fff;
+  background-color: #4CAF50;
+}

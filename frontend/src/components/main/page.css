@@ -1,0 +1,41 @@
+.page-num {
+    float: left;
+    /* display: inline-block; */
+    font-size: 20px;
+    color: rgb(93, 95, 96);
+}
+.page-input{
+    width: 20%;
+    margin-left: 5%;
+        height: 25px;
+        padding: 8px;
+        margin-bottom: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        outline: none;
+        font-size: 15px;
+}
+.page-button{
+        display: inline-block;
+        padding: 7px 15px;
+        margin-left: 5%;
+        font-size: 15px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: rgb(112, 117, 120);
+        border: none;
+        border-radius: 15px;
+    }
+
+    .page-button:hover {
+        background-color: rgb(101, 178, 229);
+    }
+
+    .page-button:active {
+        background-color: rgb(101, 178, 229);
+        box-shadow: 0 1px #666;
+        transform: translateY(4px);
+    }
