@@ -1,16 +1,13 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import { Button, Popover, TextField } from "@material-ui/core";
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import "../../agent";
-import agent from "../../agent";
-import {Button, Popover, TextField} from "@material-ui/core";
-import {FloatingLabel} from "react-bootstrap";
-
+import SearchBar from "../Search/SearchBar";
 const isDebug = process.env.REACT_APP_DEBUG_MODE === "true";
 
 
@@ -78,17 +75,18 @@ function Header() {
     }
 
     return (
-        <AppBar position="static" style={{backgroundColor: '#eee', borderBottom: '1px solid #ccc', boxShadow: 'none'}}>
-            <Toolbar style={{color: '#555'}}>
+        <AppBar position="static" style={{backgroundColor: '#eee',borderBottom: '1px solid #ccc', boxShadow: 'none'}}>
+            <Toolbar style={{color: '#555' }}>
                 <Link to="/" className="nav-link">
                     <img src="https://static.itch.io/images/itchio-textless-black.svg" alt="logo"
                          style={{width: 'auto', height: '30px', marginRight: '10px'}}/>
                 </Link>
 
                 <Typography variant="h6">Second-hand trading platform</Typography>
-
+                {/* <Search style={{marginLeft: '20px'}}/> */}
                 <div style={{flexGrow: 1}}/>
                 {/*<TokenSet></TokenSet>*/}
+                <SearchBar style={{marginLeft: '10px'}}></SearchBar>
                 <div>
                     <IconButton onClick={handleMenuClick} edge="end">
                         <img src="https://picx.zhimg.com/v2-abed1a8c04700ba7d72b45195223e0ff_l.jpg?source=172ae18b"
