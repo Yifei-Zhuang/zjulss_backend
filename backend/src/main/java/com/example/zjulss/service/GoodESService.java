@@ -53,7 +53,7 @@ public class GoodESService {
     public List<GoodForSale> searchGoodForSale(String keyWord,int pageNum,boolean isSortByPrice,boolean isSortBySort,int sort){
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder()
                 .withQuery(QueryBuilders.multiMatchQuery(keyWord, "name"))
-                .withSort(SortBuilders.fieldSort("id").order(SortOrder.ASC))
+//                .withSort(SortBuilders.fieldSort("id").order(SortOrder.ASC))
                 .withPageable(PageRequest.of(pageNum,  10))
                 .withHighlightFields(
 //                        new HighlightBuilder.Field("name").preTags("<em>").postTags("</em>")
