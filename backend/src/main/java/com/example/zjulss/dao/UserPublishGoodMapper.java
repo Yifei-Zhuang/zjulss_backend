@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface UserPublishGoodMapper {
     @Insert({
-            "insert into user_publish_goods(modify,display,uid,sid,quantity) values(#{modify},#{display},#{uid}," +
+            "insert into user_publish_goods(modify,uid,sid,quantity) values(#{modify},#{uid}," +
                     "#{sid},#{quantity})"
     })
     @Options(useGeneratedKeys = true, keyProperty = "id")

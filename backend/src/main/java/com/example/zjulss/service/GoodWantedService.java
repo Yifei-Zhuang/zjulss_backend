@@ -1,6 +1,7 @@
 package com.example.zjulss.service;
 
 import com.example.zjulss.dao.GoodWantedMapper;
+import com.example.zjulss.entity.GoodForSale;
 import com.example.zjulss.entity.GoodWanted;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,20 @@ public class GoodWantedService {
     public boolean removeWanted(int id) {
         return goodWantedMapper.removeWanted(id) == 1;
     }
+    public boolean updateGoodSort(int id, int sort) {
+        return goodWantedMapper.updateSort(sort, id) == 1;
+    }
 
+    public boolean updateGoodRemark(int id, String remark) {
+        return goodWantedMapper.updateRemark(remark, id) == 1;
+    }
+
+    public boolean updateGoodTransaction(int id, int transaction) {
+        return goodWantedMapper.updateTransaction(transaction, id) == 1;
+    }
+
+    public boolean updateGoodImage(int id, String image) {
+        return goodWantedMapper.updateImage(image, id) == 1;
+    }
 
 }
