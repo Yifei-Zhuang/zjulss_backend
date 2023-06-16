@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './LoginPage.css';
 import agent from '../../agent';
 
-const API_ROOT = "http://10.214.241.122:8080";
-const TestURL = "http://localhost:3000"
+// const API_ROOT = "http://10.214.241.122:8080";
+// const TestURL = "http://localhost:3000"
 
 
 const LoginPage = () => {
@@ -37,7 +37,7 @@ const LoginPage = () => {
 
 	const handleRegister = () => {
 		console.log("转至注册页面")
-		window.location.href = TestURL + "/Register";
+		window.location.href = '/Register';
 	}
 
 	return (
